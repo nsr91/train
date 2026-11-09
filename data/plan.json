@@ -1,0 +1,373 @@
+{
+ "athlete": "Nasser",
+ "block": "Nov 2026",
+ "weeks": 8,
+ "unit": "kg",
+ "warmup": [
+  "Band resisted 90 degree internal/external rotation",
+  "External rotation at 90\u00b0 (by itself)",
+  "Serratus wall walks",
+  "Bent over I's, Y's, and T's"
+ ],
+ "days": [
+  {
+   "id": 1,
+   "name": "Day 1",
+   "focus": "Push",
+   "exercises": [
+    {
+     "id": "cable-cross-y-raise-lying-or-standing",
+     "name": "Cable cross Y raise (lying or standing)",
+     "sets": 2,
+     "reps": "8-15",
+     "repMin": 8,
+     "repMax": 15,
+     "unit": "reps",
+     "history": {}
+    },
+    {
+     "id": "incline-plate-loaded-press",
+     "name": "Incline plate-loaded press",
+     "sets": 2,
+     "reps": "6-10",
+     "repMin": 6,
+     "repMax": 10,
+     "unit": "reps",
+     "history": {}
+    },
+    {
+     "id": "flat-plate-loaded-press",
+     "name": "Flat plate-loaded press",
+     "sets": 2,
+     "reps": "8-12",
+     "repMin": 8,
+     "repMax": 12,
+     "unit": "reps",
+     "history": {}
+    },
+    {
+     "id": "lateral-raise-machine",
+     "name": "Lateral raise machine",
+     "sets": 3,
+     "reps": "12-20",
+     "repMin": 12,
+     "repMax": 20,
+     "unit": "reps",
+     "history": {}
+    },
+    {
+     "id": "cable-triceps-pressdown",
+     "name": "Cable triceps pressdown",
+     "sets": 2,
+     "reps": "8-12",
+     "repMin": 8,
+     "repMax": 12,
+     "unit": "reps",
+     "history": {}
+    },
+    {
+     "id": "cross-body-triceps-cable",
+     "name": "Cross-body triceps cable",
+     "sets": 2,
+     "reps": "10-15",
+     "repMin": 10,
+     "repMax": 15,
+     "unit": "reps",
+     "history": {}
+    },
+    {
+     "id": "reverse-pec-deck",
+     "name": "Reverse pec deck",
+     "sets": 2,
+     "reps": "12-20",
+     "repMin": 12,
+     "repMax": 20,
+     "unit": "reps",
+     "history": {}
+    }
+   ]
+  },
+  {
+   "id": 2,
+   "name": "Day 2",
+   "focus": "Pull",
+   "exercises": [
+    {
+     "id": "hanging-leg-raise",
+     "name": "Hanging leg raise",
+     "sets": 2,
+     "reps": "12-20",
+     "repMin": 12,
+     "repMax": 20,
+     "unit": "reps",
+     "history": {}
+    },
+    {
+     "id": "lat-pulldown-medium-grip",
+     "name": "Lat pulldown - medium grip",
+     "sets": 3,
+     "reps": "6-10",
+     "repMin": 6,
+     "repMax": 10,
+     "unit": "reps",
+     "history": {}
+    },
+    {
+     "id": "sa-diagonal-pull-lat-bias",
+     "name": "SA Diagonal pull - lat bias",
+     "sets": 3,
+     "reps": "8-12",
+     "repMin": 8,
+     "repMax": 12,
+     "unit": "reps",
+     "history": {}
+    },
+    {
+     "id": "chest-supported-row-lat-bias",
+     "name": "Chest-supported row - lat bias",
+     "sets": 2,
+     "reps": "8-12",
+     "repMin": 8,
+     "repMax": 12,
+     "unit": "reps",
+     "history": {}
+    },
+    {
+     "id": "machine-row-for-rear-delts",
+     "name": "Machine row for rear delts",
+     "sets": 2,
+     "reps": "10-15",
+     "repMin": 10,
+     "repMax": 15,
+     "unit": "reps",
+     "history": {}
+    },
+    {
+     "id": "preacher-curl-machine",
+     "name": "Preacher curl machine",
+     "sets": 3,
+     "reps": "8-12",
+     "repMin": 8,
+     "repMax": 12,
+     "unit": "reps",
+     "history": {}
+    }
+   ]
+  },
+  {
+   "id": 3,
+   "name": "Day 3",
+   "focus": "Legs",
+   "exercises": [
+    {
+     "id": "leg-extension",
+     "name": "Leg extension",
+     "sets": 2,
+     "reps": "10-15",
+     "repMin": 10,
+     "repMax": 15,
+     "unit": "reps",
+     "history": {}
+    },
+    {
+     "id": "calf-raise",
+     "name": "Calf raise",
+     "sets": 3,
+     "reps": "8-12",
+     "repMin": 8,
+     "repMax": 12,
+     "unit": "reps",
+     "history": {}
+    },
+    {
+     "id": "leg-press",
+     "name": "Leg press",
+     "sets": 2,
+     "reps": "9-12",
+     "repMin": 9,
+     "repMax": 12,
+     "unit": "reps",
+     "history": {}
+    },
+    {
+     "id": "hamstring-curls",
+     "name": "Hamstring curls",
+     "sets": 2,
+     "reps": "10-15",
+     "repMin": 10,
+     "repMax": 15,
+     "unit": "reps",
+     "history": {}
+    },
+    {
+     "id": "romanian-deadlift-rdl",
+     "name": "Romanian deadlift (RDL)",
+     "sets": 2,
+     "reps": "8-10",
+     "repMin": 8,
+     "repMax": 10,
+     "unit": "reps",
+     "history": {}
+    },
+    {
+     "id": "planks",
+     "name": "Planks",
+     "sets": 2,
+     "reps": "45-90 sec",
+     "repMin": 45,
+     "repMax": 90,
+     "unit": "sec",
+     "history": {}
+    }
+   ]
+  },
+  {
+   "id": 4,
+   "name": "Day 4",
+   "focus": "Push",
+   "exercises": [
+    {
+     "id": "cable-cross-y-raise-lying-or-standing",
+     "name": "Cable cross Y raise (lying or standing)",
+     "sets": 2,
+     "reps": "8-15",
+     "repMin": 8,
+     "repMax": 15,
+     "unit": "reps",
+     "history": {}
+    },
+    {
+     "id": "flat-plate-loaded-press",
+     "name": "Flat plate-loaded press",
+     "sets": 2,
+     "reps": "6-10",
+     "repMin": 6,
+     "repMax": 10,
+     "unit": "reps",
+     "history": {}
+    },
+    {
+     "id": "incline-plate-loaded-press",
+     "name": "Incline plate-loaded press",
+     "sets": 2,
+     "reps": "8-12",
+     "repMin": 8,
+     "repMax": 12,
+     "unit": "reps",
+     "history": {}
+    },
+    {
+     "id": "sa-lateral-raise-cable-knee-height",
+     "name": "SA lateral raise - cable (knee height)",
+     "sets": 3,
+     "reps": "8-12",
+     "repMin": 8,
+     "repMax": 12,
+     "unit": "reps",
+     "history": {}
+    },
+    {
+     "id": "cable-triceps-pressdown",
+     "name": "Cable triceps pressdown",
+     "sets": 2,
+     "reps": "10-15",
+     "repMin": 10,
+     "repMax": 15,
+     "unit": "reps",
+     "history": {}
+    },
+    {
+     "id": "sa-triceps-ext-straight-from-shoulder",
+     "name": "SA triceps ext straight from shoulder",
+     "sets": 2,
+     "reps": "10-15",
+     "repMin": 10,
+     "repMax": 15,
+     "unit": "reps",
+     "history": {}
+    }
+   ]
+  },
+  {
+   "id": 5,
+   "name": "Day 5",
+   "focus": "Pull",
+   "exercises": [
+    {
+     "id": "hanging-leg-raise",
+     "name": "Hanging leg raise",
+     "sets": 2,
+     "reps": "12-20",
+     "repMin": 12,
+     "repMax": 20,
+     "unit": "reps",
+     "history": {}
+    },
+    {
+     "id": "lat-pulldown-neutral-grip",
+     "name": "Lat pulldown - neutral grip",
+     "sets": 3,
+     "reps": "8-12",
+     "repMin": 8,
+     "repMax": 12,
+     "unit": "reps",
+     "history": {}
+    },
+    {
+     "id": "chest-supported-row-lat-bias",
+     "name": "Chest-supported row - lat bias",
+     "sets": 3,
+     "reps": "8-12",
+     "repMin": 8,
+     "repMax": 12,
+     "unit": "reps",
+     "history": {}
+    },
+    {
+     "id": "seated-row-upper-back-bias",
+     "name": "Seated row - upper-back bias",
+     "sets": 2,
+     "reps": "8-12",
+     "repMin": 8,
+     "repMax": 12,
+     "unit": "reps",
+     "history": {}
+    },
+    {
+     "id": "rear-delt-cable-fly-bilateral",
+     "name": "Rear delt cable fly bilateral",
+     "sets": 3,
+     "reps": "12-20",
+     "repMin": 12,
+     "repMax": 20,
+     "unit": "reps",
+     "history": {}
+    },
+    {
+     "id": "cable-rope-hammer-drag-curl",
+     "name": "Cable rope hammer drag curl",
+     "sets": 3,
+     "reps": "10-15",
+     "repMin": 10,
+     "repMax": 15,
+     "unit": "reps",
+     "history": {}
+    },
+    {
+     "id": "bicep-curl-machine",
+     "name": "Bicep curl machine",
+     "sets": 2,
+     "reps": "10-15",
+     "repMin": 10,
+     "repMax": 15,
+     "unit": "reps",
+     "history": {}
+    }
+   ]
+  }
+ ],
+ "coachNotes": {
+  "hanging-leg-raise": "Grip just outside the shoulders. Deadhang, hands are hooks and arms are ropes. Depress the scaps and lock them down. Posterior tilt the pelvis under you (scared dog position). Slowly lift the straightened legs out as far from you as you can, don't think \"up\". pause, come down slow. Don't let shoulders cave or the hips turn behind you \"instahoe-duckbutt position)",
+  "cable-cross-y-raise-lying-or-standing": "I set this up by laying on the ground and setting the cable cams on a close cable stack 3 pins above the height on my chest as a set up. If you want to do it on a bench, use the same rule of thumb for the distance in front of the body the cams are raised from the sternum and use a low-moderate angle on the bench.bottom 3 inches are where the money is. initiate super slow and controlled. SUPER SLOW. then carry through to the end. think out not up and do not use a load that forces you to shrug to move the weight."
+ }
+}

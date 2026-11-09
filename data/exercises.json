@@ -1,0 +1,980 @@
+{
+ "cable-cross-y-raise-lying-or-standing": {
+  "name": "Cable cross Y raise (lying or standing)",
+  "muscles": [
+   "Side delts",
+   "Lower traps"
+  ],
+  "equipment": "Cable crossover (two low pulleys)",
+  "summary": "Cable lateral raise in a Y path for side delts, with tension where dumbbells give none at the bottom.",
+  "setup": [
+   "Coach's setup: lie on the floor between a close-set pair of pulleys, cams about 3 pin holes above chest height.",
+   "Bench option: keep the cams the same distance in front of your sternum and use a low-to-moderate incline.",
+   "Cross the cables: each hand takes the handle from the opposite side."
+  ],
+  "cues": [
+   "Start super slow – the bottom 3 inches is where the money is.",
+   "Think OUT, not up; sweep wide into a Y.",
+   "Carry the rep smoothly through to the end range.",
+   "Shoulders stay down – no shrugging.",
+   "Lower under control back to the start."
+  ],
+  "mistakes": [
+   "Load so heavy you have to shrug to move it.",
+   "Rushing the start of the rep.",
+   "Lifting up toward the ears instead of out."
+  ],
+  "tempo": "2-0-3 (down-pause-up), very slow start",
+  "rest": 120,
+  "images": [
+   "images/cable-cross-y-raise-lying-or-standing/0.jpg",
+   "images/cable-cross-y-raise-lying-or-standing/1.jpg"
+  ],
+  "imageSource": "free-exercise-db: Cable_Seated_Lateral_Raise",
+  "imageIsApprox": true
+ },
+ "incline-plate-loaded-press": {
+  "name": "Incline plate-loaded press",
+  "muscles": [
+   "Upper chest",
+   "Front delts",
+   "Triceps"
+  ],
+  "equipment": "Plate-loaded machine",
+  "summary": "Main upper-chest press of the push day; the machine path lets you push hard safely near failure.",
+  "setup": [
+   "Set the seat so the handles line up with your upper chest.",
+   "Feet flat, upper back tight, shoulder blades pulled back and down.",
+   "Grip just wider than shoulders, wrists stacked over elbows."
+  ],
+  "cues": [
+   "Lower under control to a deep, comfortable stretch.",
+   "Keep the chest up and shoulders pinned back.",
+   "Drive up and slightly in; elbows about 45–60° from your body.",
+   "Stop just short of lockout to keep tension on the chest."
+  ],
+  "mistakes": [
+   "Seat too high – handles end up at the neck or shoulders.",
+   "Shoulders rolling forward at the top.",
+   "Bouncing out of the bottom."
+  ],
+  "tempo": "3-1-1 (down-pause-up)",
+  "rest": 180,
+  "images": [
+   "images/incline-plate-loaded-press/0.jpg",
+   "images/incline-plate-loaded-press/1.jpg"
+  ],
+  "imageSource": "free-exercise-db: Leverage_Incline_Chest_Press",
+  "imageIsApprox": false
+ },
+ "flat-plate-loaded-press": {
+  "name": "Flat plate-loaded press",
+  "muscles": [
+   "Chest",
+   "Front delts",
+   "Triceps"
+  ],
+  "equipment": "Plate-loaded machine",
+  "summary": "Mid/lower chest compound press for overall chest mass and pressing strength.",
+  "setup": [
+   "Set the seat so handles line up with mid-chest.",
+   "Feet flat, shoulder blades back and down, slight arch.",
+   "Grip slightly wider than shoulders."
+  ],
+  "cues": [
+   "Lower slowly into a full chest stretch.",
+   "Keep shoulder blades pinned throughout.",
+   "Press through the palms, elbows about 45–60°.",
+   "Squeeze the chest; don't slam into lockout."
+  ],
+  "mistakes": [
+   "Shoulders shrugging or rolling forward.",
+   "Cutting depth short as the set gets hard.",
+   "Elbows flared straight out at 90°."
+  ],
+  "tempo": "3-1-1 (down-pause-up)",
+  "rest": 180,
+  "images": [
+   "images/flat-plate-loaded-press/0.jpg",
+   "images/flat-plate-loaded-press/1.jpg"
+  ],
+  "imageSource": "free-exercise-db: Leverage_Chest_Press",
+  "imageIsApprox": false
+ },
+ "lateral-raise-machine": {
+  "name": "Lateral raise machine",
+  "muscles": [
+   "Side delts"
+  ],
+  "equipment": "Lateral raise machine",
+  "summary": "Isolates the side delts for shoulder width with steady machine tension.",
+  "setup": [
+   "Set the seat so the shoulder joint lines up with the machine's pivot.",
+   "Pads rest on the outside of the forearms/elbows.",
+   "Sit tall, chest against the pad if there is one."
+  ],
+  "cues": [
+   "Lead with the elbows, out to the sides.",
+   "Raise to about shoulder height.",
+   "Keep shoulders down, neck relaxed.",
+   "Lower slowly; don't let the stack touch between reps."
+  ],
+  "mistakes": [
+   "Shrugging the weight up with the traps.",
+   "Pivot misaligned with the shoulder.",
+   "Swinging the torso."
+  ],
+  "tempo": "2-1-2 (down-pause-up)",
+  "rest": 90,
+  "images": [
+   "images/lateral-raise-machine/0.jpg",
+   "images/lateral-raise-machine/1.jpg"
+  ],
+  "imageSource": "free-exercise-db: Side_Lateral_Raise",
+  "imageIsApprox": true
+ },
+ "cable-triceps-pressdown": {
+  "name": "Cable triceps pressdown",
+  "muscles": [
+   "Triceps"
+  ],
+  "equipment": "Cable station (high pulley)",
+  "summary": "Simple, heavy-ish triceps isolation that is easy to progress.",
+  "setup": [
+   "Attach a bar or rope to a high pulley.",
+   "Stand close, slight forward lean, elbows at your sides."
+  ],
+  "cues": [
+   "Pin the elbows to your sides.",
+   "Push down until arms are fully straight; squeeze.",
+   "Let the forearms rise until just above 90°, then repeat.",
+   "Keep the shoulders down and still."
+  ],
+  "mistakes": [
+   "Elbows drifting forward and up.",
+   "Leaning over and pushing with body weight.",
+   "Cutting the lockout short."
+  ],
+  "tempo": "2-0-1 (down-pause-up)",
+  "rest": 90,
+  "images": [
+   "images/cable-triceps-pressdown/0.jpg",
+   "images/cable-triceps-pressdown/1.jpg"
+  ],
+  "imageSource": "free-exercise-db: Triceps_Pushdown",
+  "imageIsApprox": false
+ },
+ "cross-body-triceps-cable": {
+  "name": "Cross-body triceps cable",
+  "muscles": [
+   "Triceps (lateral head)"
+  ],
+  "equipment": "Cable station (single handle)",
+  "summary": "Single-arm cable extension across the body to load each triceps on its own.",
+  "setup": [
+   "Set a single handle at about shoulder height.",
+   "Stand side-on; reach across your body with the far arm to take it.",
+   "Upper arm roughly parallel to the floor, elbow pointing to the side."
+  ],
+  "cues": [
+   "Keep the upper arm still – only the forearm moves.",
+   "Extend out across and away until the arm is straight.",
+   "Squeeze the triceps at lockout.",
+   "Return slowly until the hand is near the opposite shoulder."
+  ],
+  "mistakes": [
+   "Turning it into a rear-delt fly by swinging the upper arm.",
+   "Rotating the torso to finish the rep.",
+   "Going too heavy to reach full lockout."
+  ],
+  "tempo": "2-0-1 (down-pause-up)",
+  "rest": 90,
+  "images": [
+   "images/cross-body-triceps-cable/0.jpg",
+   "images/cross-body-triceps-cable/1.jpg"
+  ],
+  "imageSource": "free-exercise-db: Cable_One_Arm_Tricep_Extension",
+  "imageIsApprox": true
+ },
+ "reverse-pec-deck": {
+  "name": "Reverse pec deck",
+  "muscles": [
+   "Rear delts",
+   "Mid traps",
+   "Rhomboids"
+  ],
+  "equipment": "Pec deck / rear delt machine",
+  "summary": "Rear-delt isolation for shoulder balance and posture alongside the pressing.",
+  "setup": [
+   "Face the pad; set handles to the rear-delt position.",
+   "Seat height so the handles are at shoulder level.",
+   "Neutral or pronated grip, arms nearly straight."
+  ],
+  "cues": [
+   "Sweep the arms out and back in a wide arc.",
+   "Lead with the elbows, not the hands.",
+   "Stop when arms are in line with the body.",
+   "Keep shoulders down; lower slowly."
+  ],
+  "mistakes": [
+   "Squeezing the shoulder blades hard so the traps take over.",
+   "Bending the elbows more as you fatigue.",
+   "Using momentum to swing the handles."
+  ],
+  "tempo": "2-1-2 (down-pause-up)",
+  "rest": 90,
+  "images": [
+   "images/reverse-pec-deck/0.jpg",
+   "images/reverse-pec-deck/1.jpg"
+  ],
+  "imageSource": "free-exercise-db: Reverse_Machine_Flyes",
+  "imageIsApprox": false
+ },
+ "hanging-leg-raise": {
+  "name": "Hanging leg raise",
+  "muscles": [
+   "Lower abs",
+   "Hip flexors"
+  ],
+  "equipment": "Pull-up bar",
+  "summary": "Core work emphasizing pelvic control and the lower abs.",
+  "setup": [
+   "Grip just outside shoulder width.",
+   "Dead hang: hands are hooks, arms are ropes.",
+   "Pull the shoulder blades down and lock them there."
+  ],
+  "cues": [
+   "Tuck the pelvis under (\"scared dog\") before lifting.",
+   "Keep legs straight and lift them OUT, as far from you as possible – don't think \"up\".",
+   "Pause at the top, then lower slowly.",
+   "Don't let the shoulders cave or the hips swing behind you (no \"duck butt\")."
+  ],
+  "mistakes": [
+   "Swinging and using momentum.",
+   "Losing the scap depression and hanging on the joints.",
+   "Arching the low back instead of tilting the pelvis."
+  ],
+  "tempo": "3-1-2 (down-pause-up)",
+  "rest": 60,
+  "images": [
+   "images/hanging-leg-raise/0.jpg",
+   "images/hanging-leg-raise/1.jpg"
+  ],
+  "imageSource": "free-exercise-db: Hanging_Leg_Raise",
+  "imageIsApprox": false
+ },
+ "lat-pulldown-medium-grip": {
+  "name": "Lat pulldown - medium grip",
+  "muscles": [
+   "Lats",
+   "Upper back",
+   "Biceps"
+  ],
+  "equipment": "Lat pulldown machine",
+  "summary": "Primary vertical pull for lat width.",
+  "setup": [
+   "Set the thigh pad snug.",
+   "Grip about shoulder width or slightly wider, overhand.",
+   "Sit tall, slight lean back, chest up."
+  ],
+  "cues": [
+   "Start each rep by pulling the shoulders down.",
+   "Drive the elbows down to your sides.",
+   "Bring the bar to the upper chest.",
+   "Let the arms rise fully for a lat stretch at the top."
+  ],
+  "mistakes": [
+   "Leaning way back and turning it into a row.",
+   "Pulling with the hands/biceps instead of the elbows.",
+   "Partial reps without the top stretch."
+  ],
+  "tempo": "3-1-1 (down-pause-up)",
+  "rest": 150,
+  "images": [
+   "images/lat-pulldown-medium-grip/0.jpg",
+   "images/lat-pulldown-medium-grip/1.jpg"
+  ],
+  "imageSource": "free-exercise-db: Wide-Grip_Lat_Pulldown",
+  "imageIsApprox": true
+ },
+ "sa-diagonal-pull-lat-bias": {
+  "name": "SA Diagonal pull - lat bias",
+  "muscles": [
+   "Lats",
+   "Teres major"
+  ],
+  "equipment": "Cable station (single handle, high pulley)",
+  "summary": "Single-arm pull on a diagonal path that matches lat fiber direction for a big stretch and contraction.",
+  "setup": [
+   "Set a single handle on a high pulley.",
+   "Stand or kneel slightly off to the side so the cable comes from high and across.",
+   "Start with the arm long and the lat stretched."
+  ],
+  "cues": [
+   "Pull the elbow down and back toward your hip.",
+   "Keep the torso still; don't rotate to cheat.",
+   "Squeeze the lat at the bottom.",
+   "Return slowly into a full stretch."
+  ],
+  "mistakes": [
+   "Turning the torso to finish the rep.",
+   "Pulling to the chest instead of the hip.",
+   "Short stretch at the top."
+  ],
+  "tempo": "2-1-2 (down-pause-up)",
+  "rest": 120,
+  "images": [
+   "images/sa-diagonal-pull-lat-bias/0.jpg",
+   "images/sa-diagonal-pull-lat-bias/1.jpg"
+  ],
+  "imageSource": "free-exercise-db: One_Arm_Lat_Pulldown",
+  "imageIsApprox": true
+ },
+ "chest-supported-row-lat-bias": {
+  "name": "Chest-supported row - lat bias",
+  "muscles": [
+   "Lats",
+   "Upper back",
+   "Rear delts"
+  ],
+  "equipment": "Chest-supported row machine",
+  "summary": "Row with the chest braced so the lats do the work without low-back fatigue.",
+  "setup": [
+   "Set the chest pad so you reach the handles with arms fully extended.",
+   "Neutral grip if available, chest firmly on the pad."
+  ],
+  "cues": [
+   "Keep elbows close to your sides.",
+   "Pull the elbows back toward your hips, not your armpits.",
+   "Chest stays on the pad the whole rep.",
+   "Reach forward fully for the stretch."
+  ],
+  "mistakes": [
+   "Flaring elbows wide (shifts work to upper back).",
+   "Lifting the chest off the pad to heave.",
+   "Shrugging at the end of the rep."
+  ],
+  "tempo": "2-1-2 (down-pause-up)",
+  "rest": 150,
+  "images": [
+   "images/chest-supported-row-lat-bias/0.jpg",
+   "images/chest-supported-row-lat-bias/1.jpg"
+  ],
+  "imageSource": "free-exercise-db: Leverage_Iso_Row",
+  "imageIsApprox": true
+ },
+ "machine-row-for-rear-delts": {
+  "name": "Machine row for rear delts",
+  "muscles": [
+   "Rear delts",
+   "Upper back"
+  ],
+  "equipment": "Row machine",
+  "summary": "Wide-elbow row that biases the rear delts and upper back.",
+  "setup": [
+   "Set the seat so the handles are about chest/shoulder height.",
+   "Overhand grip, wider than shoulders."
+  ],
+  "cues": [
+   "Flare the elbows out wide, about shoulder height.",
+   "Pull with the elbows, not the hands.",
+   "Stop when the elbows are in line with your torso.",
+   "Keep shoulder blades fairly relaxed; feel the rear delts."
+  ],
+  "mistakes": [
+   "Over-rowing so the shoulder blades and traps take over.",
+   "Dropping the elbows into a normal row.",
+   "Going too heavy and jerking."
+  ],
+  "tempo": "2-1-2 (down-pause-up)",
+  "rest": 120,
+  "images": [
+   "images/machine-row-for-rear-delts/0.jpg",
+   "images/machine-row-for-rear-delts/1.jpg"
+  ],
+  "imageSource": "free-exercise-db: Leverage_Iso_Row",
+  "imageIsApprox": true
+ },
+ "preacher-curl-machine": {
+  "name": "Preacher curl machine",
+  "muscles": [
+   "Biceps",
+   "Brachialis"
+  ],
+  "equipment": "Preacher curl machine",
+  "summary": "Biceps isolation with the arm braced so you can't cheat.",
+  "setup": [
+   "Set the seat so armpits sit snug at the top of the pad.",
+   "Elbows lined up with the machine's pivot."
+  ],
+  "cues": [
+   "Curl up and squeeze the biceps.",
+   "Lower slowly to almost full extension.",
+   "Keep upper arms glued to the pad.",
+   "Don't let the weight crash at the bottom."
+  ],
+  "mistakes": [
+   "Lifting the elbows or shoulders off the pad.",
+   "Skipping the bottom half of the rep.",
+   "Elbows misaligned with the pivot."
+  ],
+  "tempo": "3-0-1 (down-pause-up)",
+  "rest": 90,
+  "images": [
+   "images/preacher-curl-machine/0.jpg",
+   "images/preacher-curl-machine/1.jpg"
+  ],
+  "imageSource": "free-exercise-db: Machine_Preacher_Curls",
+  "imageIsApprox": false
+ },
+ "leg-extension": {
+  "name": "Leg extension",
+  "muscles": [
+   "Quads"
+  ],
+  "equipment": "Leg extension machine",
+  "summary": "Quad isolation; a good warm-up for the knees and quads before heavier leg work.",
+  "setup": [
+   "Line your knee up with the machine's pivot.",
+   "Ankle pad just above the feet.",
+   "Hold the handles and sit back firmly."
+  ],
+  "cues": [
+   "Extend fully and squeeze the quads at the top.",
+   "Lower slowly under control.",
+   "Keep hips down on the seat.",
+   "Toes neutral, not pointed."
+  ],
+  "mistakes": [
+   "Kicking the weight up with momentum.",
+   "Hips lifting off the seat.",
+   "Knee out of line with the pivot."
+  ],
+  "tempo": "3-1-1 (down-pause-up)",
+  "rest": 90,
+  "images": [
+   "images/leg-extension/0.jpg",
+   "images/leg-extension/1.jpg"
+  ],
+  "imageSource": "free-exercise-db: Leg_Extensions",
+  "imageIsApprox": false
+ },
+ "calf-raise": {
+  "name": "Calf raise",
+  "muscles": [
+   "Calves (gastrocnemius)",
+   "Soleus"
+  ],
+  "equipment": "Calf raise machine",
+  "summary": "Direct calf work using a full range of motion.",
+  "setup": [
+   "Balls of the feet on the edge of the platform.",
+   "Knees straight but not locked.",
+   "Set the shoulder pads (or bar) so you start in a stretch."
+  ],
+  "cues": [
+   "Sink into a deep stretch and pause 1–2 s.",
+   "Press up through the big toe as high as you can.",
+   "Hold the top briefly.",
+   "No bouncing."
+  ],
+  "mistakes": [
+   "Bouncing out of the bottom.",
+   "Half reps.",
+   "Bending the knees to push the weight."
+  ],
+  "tempo": "2-2-1 (down-pause-up)",
+  "rest": 60,
+  "images": [
+   "images/calf-raise/0.jpg",
+   "images/calf-raise/1.jpg"
+  ],
+  "imageSource": "free-exercise-db: Standing_Calf_Raises",
+  "imageIsApprox": false
+ },
+ "leg-press": {
+  "name": "Leg press",
+  "muscles": [
+   "Quads",
+   "Glutes",
+   "Adductors"
+  ],
+  "equipment": "Leg press machine",
+  "summary": "Main compound leg movement of the program.",
+  "setup": [
+   "Back and hips flat on the pad.",
+   "Feet about shoulder width, mid-platform.",
+   "Release the safeties once in position."
+  ],
+  "cues": [
+   "Lower until knees are deep but the low back stays on the pad.",
+   "Knees track over the toes.",
+   "Press through the whole foot.",
+   "Don't lock the knees at the top."
+  ],
+  "mistakes": [
+   "Hips rolling up off the pad at the bottom.",
+   "Knees caving in.",
+   "Locking out the knees hard."
+  ],
+  "tempo": "3-1-1 (down-pause-up)",
+  "rest": 180,
+  "images": [
+   "images/leg-press/0.jpg",
+   "images/leg-press/1.jpg"
+  ],
+  "imageSource": "free-exercise-db: Leg_Press",
+  "imageIsApprox": false
+ },
+ "hamstring-curls": {
+  "name": "Hamstring curls",
+  "muscles": [
+   "Hamstrings",
+   "Calves"
+  ],
+  "equipment": "Leg curl machine (seated or lying)",
+  "summary": "Hamstring isolation to train knee flexion directly.",
+  "setup": [
+   "Knee lined up with the machine's pivot.",
+   "Pad just above the heels.",
+   "Seated: thigh pad locked down snug. Lying: hips pressed into the bench."
+  ],
+  "cues": [
+   "Curl the heels toward the glutes.",
+   "Squeeze for a moment at full contraction.",
+   "Lower slowly to almost straight.",
+   "Hips stay down."
+  ],
+  "mistakes": [
+   "Hips lifting to cheat the weight up.",
+   "Dropping the weight on the way down.",
+   "Short range of motion."
+  ],
+  "tempo": "3-1-1 (down-pause-up)",
+  "rest": 90,
+  "images": [
+   "images/hamstring-curls/0.jpg",
+   "images/hamstring-curls/1.jpg"
+  ],
+  "imageSource": "free-exercise-db: Lying_Leg_Curls",
+  "imageIsApprox": false
+ },
+ "romanian-deadlift-rdl": {
+  "name": "Romanian deadlift (RDL)",
+  "muscles": [
+   "Hamstrings",
+   "Glutes",
+   "Lower back"
+  ],
+  "equipment": "Barbell or dumbbells",
+  "summary": "Hip-hinge that loads the hamstrings in a long stretch.",
+  "setup": [
+   "Stand hip width, slight knee bend.",
+   "Bar or dumbbells close against the thighs.",
+   "Brace the core, chest proud."
+  ],
+  "cues": [
+   "Push the hips back; the bar slides down the legs.",
+   "Keep the back flat and the bar close.",
+   "Stop when you feel a strong hamstring stretch.",
+   "Drive the hips forward to stand; squeeze glutes."
+  ],
+  "mistakes": [
+   "Rounding the lower back.",
+   "Bending the knees into a squat.",
+   "Letting the bar drift away from the legs."
+  ],
+  "tempo": "3-1-1 (down-pause-up)",
+  "rest": 150,
+  "images": [
+   "images/romanian-deadlift-rdl/0.jpg",
+   "images/romanian-deadlift-rdl/1.jpg"
+  ],
+  "imageSource": "free-exercise-db: Romanian_Deadlift",
+  "imageIsApprox": false
+ },
+ "planks": {
+  "name": "Planks",
+  "muscles": [
+   "Abs",
+   "Obliques",
+   "Deep core"
+  ],
+  "equipment": "Bodyweight",
+  "summary": "Core stability hold to finish the leg day.",
+  "setup": [
+   "Forearms under shoulders.",
+   "Legs straight, feet about hip width."
+  ],
+  "cues": [
+   "Straight line from head to heels.",
+   "Squeeze glutes and brace the abs.",
+   "Tuck the pelvis slightly.",
+   "Breathe steadily."
+  ],
+  "mistakes": [
+   "Hips sagging.",
+   "Hips piked high.",
+   "Holding your breath."
+  ],
+  "tempo": "",
+  "rest": 60,
+  "images": [
+   "images/planks/0.jpg",
+   "images/planks/1.jpg"
+  ],
+  "imageSource": "free-exercise-db: Plank",
+  "imageIsApprox": false
+ },
+ "sa-lateral-raise-cable-knee-height": {
+  "name": "SA lateral raise - cable (knee height)",
+  "muscles": [
+   "Side delts"
+  ],
+  "equipment": "Cable station (single handle)",
+  "summary": "Single-arm cable lateral raise with the pulley at knee height for tension through the whole range.",
+  "setup": [
+   "Set the pulley at about knee height.",
+   "Stand side-on; take the handle with the far hand.",
+   "Hold the machine with the other hand for support."
+  ],
+  "cues": [
+   "Raise out to the side, leading with the elbow.",
+   "Stop around shoulder height.",
+   "Keep shoulder down, neck relaxed.",
+   "Lower slowly across the body."
+  ],
+  "mistakes": [
+   "Shrugging up.",
+   "Leaning the torso away to cheat.",
+   "Bending the elbow more as reps get hard."
+  ],
+  "tempo": "2-1-2 (down-pause-up)",
+  "rest": 90,
+  "images": [
+   "images/sa-lateral-raise-cable-knee-height/0.jpg",
+   "images/sa-lateral-raise-cable-knee-height/1.jpg"
+  ],
+  "imageSource": "free-exercise-db: Standing_Low-Pulley_Deltoid_Raise",
+  "imageIsApprox": true
+ },
+ "sa-triceps-ext-straight-from-shoulder": {
+  "name": "SA triceps ext straight from shoulder",
+  "muscles": [
+   "Triceps"
+  ],
+  "equipment": "Cable station (single handle)",
+  "summary": "Single-arm cable triceps extension with the upper arm out in front for a stretched-position triceps load.",
+  "setup": [
+   "Set a single handle at about shoulder height.",
+   "Face away from the stack; upper arm points straight forward from the shoulder.",
+   "Elbow bent, hand near the side of the head."
+  ],
+  "cues": [
+   "Keep the upper arm still.",
+   "Extend forward until the arm is straight.",
+   "Squeeze the triceps at lockout.",
+   "Return slowly into a full bend."
+  ],
+  "mistakes": [
+   "Letting the elbow drop or drift.",
+   "Turning it into a press with the shoulder.",
+   "Cutting the stretch short."
+  ],
+  "tempo": "2-0-1 (down-pause-up)",
+  "rest": 90,
+  "images": [],
+  "imageSource": "",
+  "imageIsApprox": false
+ },
+ "lat-pulldown-neutral-grip": {
+  "name": "Lat pulldown - neutral grip",
+  "muscles": [
+   "Lats",
+   "Upper back",
+   "Biceps"
+  ],
+  "equipment": "Lat pulldown machine (neutral handle)",
+  "summary": "Vertical pull with a neutral grip, often allowing a stronger pull and deeper lat stretch.",
+  "setup": [
+   "Attach a neutral-grip handle.",
+   "Thigh pad snug, sit tall, slight lean back."
+  ],
+  "cues": [
+   "Pull the shoulders down first.",
+   "Drive the elbows down and in toward your sides.",
+   "Bring the handle to the upper chest.",
+   "Let it rise fully for the stretch."
+  ],
+  "mistakes": [
+   "Leaning way back and rowing.",
+   "Pulling with the arms only.",
+   "Skipping the top stretch."
+  ],
+  "tempo": "3-1-1 (down-pause-up)",
+  "rest": 150,
+  "images": [
+   "images/lat-pulldown-neutral-grip/0.jpg",
+   "images/lat-pulldown-neutral-grip/1.jpg"
+  ],
+  "imageSource": "free-exercise-db: V-Bar_Pulldown",
+  "imageIsApprox": true
+ },
+ "seated-row-upper-back-bias": {
+  "name": "Seated row - upper-back bias",
+  "muscles": [
+   "Upper back",
+   "Rear delts",
+   "Lats"
+  ],
+  "equipment": "Seated cable row",
+  "summary": "Horizontal row with the elbows higher and wider to bias the upper back.",
+  "setup": [
+   "Wide grip or wide handle.",
+   "Feet on the platform, knees soft, sit tall."
+  ],
+  "cues": [
+   "Pull toward the lower chest with elbows out at about 45–60°.",
+   "Squeeze the shoulder blades together at the end.",
+   "Keep the torso upright – no rocking.",
+   "Reach forward and let the shoulder blades spread."
+  ],
+  "mistakes": [
+   "Rocking the torso to move the weight.",
+   "Shrugging the shoulders up.",
+   "Tucking elbows in (turns it into a lat row)."
+  ],
+  "tempo": "2-1-2 (down-pause-up)",
+  "rest": 150,
+  "images": [
+   "images/seated-row-upper-back-bias/0.jpg",
+   "images/seated-row-upper-back-bias/1.jpg"
+  ],
+  "imageSource": "free-exercise-db: Seated_Cable_Rows",
+  "imageIsApprox": true
+ },
+ "rear-delt-cable-fly-bilateral": {
+  "name": "Rear delt cable fly bilateral",
+  "muscles": [
+   "Rear delts",
+   "Mid traps"
+  ],
+  "equipment": "Cable crossover (two pulleys)",
+  "summary": "Two-arm cable rear-delt fly for constant tension on the rear delts.",
+  "setup": [
+   "Set both pulleys at about shoulder height.",
+   "Cross the cables: left hand takes the right cable, right hand the left.",
+   "Step back to center, arms out in front."
+  ],
+  "cues": [
+   "Sweep the arms out and back in a wide arc.",
+   "Keep a slight, fixed bend in the elbows.",
+   "Stop when arms are in line with the body.",
+   "Return slowly until the hands cross."
+  ],
+  "mistakes": [
+   "Shrugging or squeezing the traps.",
+   "Pulling with bent arms like a row.",
+   "Leaning back to cheat."
+  ],
+  "tempo": "2-1-2 (down-pause-up)",
+  "rest": 90,
+  "images": [
+   "images/rear-delt-cable-fly-bilateral/0.jpg",
+   "images/rear-delt-cable-fly-bilateral/1.jpg"
+  ],
+  "imageSource": "free-exercise-db: Cable_Rear_Delt_Fly",
+  "imageIsApprox": false
+ },
+ "cable-rope-hammer-drag-curl": {
+  "name": "Cable rope hammer drag curl",
+  "muscles": [
+   "Brachialis",
+   "Brachioradialis",
+   "Biceps"
+  ],
+  "equipment": "Cable station (low pulley, rope)",
+  "summary": "Neutral-grip drag curl to build the brachialis and forearms with the elbows moving back.",
+  "setup": [
+   "Rope on a low pulley; stand close to the stack.",
+   "Neutral grip, palms facing each other."
+  ],
+  "cues": [
+   "Drag the rope up close to your body.",
+   "Let the elbows travel back as you curl.",
+   "Squeeze at the top.",
+   "Lower slowly along the same path."
+  ],
+  "mistakes": [
+   "Swinging the torso.",
+   "Letting the rope drift away from the body.",
+   "Elbows pushing forward (turns into a normal curl)."
+  ],
+  "tempo": "2-1-2 (down-pause-up)",
+  "rest": 90,
+  "images": [
+   "images/cable-rope-hammer-drag-curl/0.jpg",
+   "images/cable-rope-hammer-drag-curl/1.jpg"
+  ],
+  "imageSource": "free-exercise-db: Cable_Hammer_Curls_-_Rope_Attachment",
+  "imageIsApprox": true
+ },
+ "bicep-curl-machine": {
+  "name": "Bicep curl machine",
+  "muscles": [
+   "Biceps"
+  ],
+  "equipment": "Biceps curl machine",
+  "summary": "Strict biceps isolation with a fixed path.",
+  "setup": [
+   "Set the seat so the upper arms lie flat on the pad.",
+   "Elbows lined up with the machine's pivot."
+  ],
+  "cues": [
+   "Curl up and squeeze hard at the top.",
+   "Lower slowly to nearly straight.",
+   "Keep shoulders down and back.",
+   "Upper arms stay on the pad."
+  ],
+  "mistakes": [
+   "Lifting the elbows off the pad.",
+   "Rushing the lowering phase.",
+   "Partial reps at the top only."
+  ],
+  "tempo": "3-0-1 (down-pause-up)",
+  "rest": 90,
+  "images": [
+   "images/bicep-curl-machine/0.jpg",
+   "images/bicep-curl-machine/1.jpg"
+  ],
+  "imageSource": "free-exercise-db: Machine_Bicep_Curl",
+  "imageIsApprox": false
+ },
+ "warmup-band-resisted-90-degree-internal-external-rotation": {
+  "name": "Band resisted 90 degree internal/external rotation",
+  "muscles": [
+   "Rotator cuff",
+   "Rear delts"
+  ],
+  "equipment": "Resistance band",
+  "summary": "Rotator cuff warm-up through internal and external rotation in the 90/90 position.",
+  "setup": [
+   "Anchor a light band at shoulder height.",
+   "Upper arm out to the side at shoulder height, elbow bent 90°.",
+   "Face the anchor for external rotation; turn away for internal rotation."
+  ],
+  "cues": [
+   "Rotate around the elbow – the upper arm stays still.",
+   "Move slow and controlled.",
+   "Keep the shoulder down, not shrugged.",
+   "Light band; it's a warm-up."
+  ],
+  "mistakes": [
+   "Letting the elbow drop below shoulder height.",
+   "Using a band that's too heavy.",
+   "Arching the back to finish the rotation."
+  ],
+  "tempo": "2-1-2 (down-pause-up)",
+  "rest": 60,
+  "images": [
+   "images/warmup-band-resisted-90-degree-internal-external-rotation/0.jpg",
+   "images/warmup-band-resisted-90-degree-internal-external-rotation/1.jpg"
+  ],
+  "imageSource": "free-exercise-db: External_Rotation_with_Band",
+  "imageIsApprox": true
+ },
+ "warmup-external-rotation-at-90-by-itself": {
+  "name": "External rotation at 90° (by itself)",
+  "muscles": [
+   "Rotator cuff (external rotators)"
+  ],
+  "equipment": "Band, cable or light dumbbell",
+  "summary": "Isolated external rotation at 90° to prep the rotator cuff for pressing.",
+  "setup": [
+   "Upper arm out to the side at shoulder height, elbow bent 90°.",
+   "Start with the forearm pointing forward/down."
+  ],
+  "cues": [
+   "Rotate the forearm up until vertical.",
+   "Keep the elbow fixed at shoulder height.",
+   "Slow and controlled both ways.",
+   "Shoulder stays down."
+  ],
+  "mistakes": [
+   "Elbow sagging.",
+   "Going too heavy.",
+   "Leaning back to get extra range."
+  ],
+  "tempo": "2-1-2 (down-pause-up)",
+  "rest": 60,
+  "images": [
+   "images/warmup-external-rotation-at-90-by-itself/0.jpg",
+   "images/warmup-external-rotation-at-90-by-itself/1.jpg"
+  ],
+  "imageSource": "free-exercise-db: External_Rotation",
+  "imageIsApprox": true
+ },
+ "warmup-serratus-wall-walks": {
+  "name": "Serratus wall walks",
+  "muscles": [
+   "Serratus anterior",
+   "Lower traps"
+  ],
+  "equipment": "Wall (mini-band optional)",
+  "summary": "Serratus activation drill to set up healthy shoulder-blade movement before upper-body work.",
+  "setup": [
+   "Face a wall with forearms on it, about shoulder width.",
+   "Optional: light mini-band around the wrists."
+  ],
+  "cues": [
+   "Push the forearms into the wall and spread the shoulder blades.",
+   "Walk the arms up the wall one at a time.",
+   "Keep pushing into the wall the whole way.",
+   "Walk back down under control."
+  ],
+  "mistakes": [
+   "Arching the low back.",
+   "Shrugging the shoulders to the ears.",
+   "Losing pressure against the wall."
+  ],
+  "tempo": "",
+  "rest": 60,
+  "images": [],
+  "imageSource": "",
+  "imageIsApprox": false
+ },
+ "warmup-bent-over-i-s-y-s-and-t-s": {
+  "name": "Bent over I's, Y's, and T's",
+  "muscles": [
+   "Lower traps",
+   "Mid traps",
+   "Rear delts",
+   "Rotator cuff"
+  ],
+  "equipment": "Bodyweight or very light dumbbells",
+  "summary": "Scapular warm-up that hits the upper back and shoulder stabilizers in three positions.",
+  "setup": [
+   "Hinge forward to about 45° or more, flat back.",
+   "Arms hang down, thumbs up."
+  ],
+  "cues": [
+   "I: raise arms straight overhead in line with the body.",
+   "Y: raise arms up and out in a Y.",
+   "T: raise arms straight out to the sides.",
+   "Move slowly, shoulders down, brief hold at the top."
+  ],
+  "mistakes": [
+   "Shrugging instead of using the shoulder blades.",
+   "Rounding the back.",
+   "Using weights that cause swinging."
+  ],
+  "tempo": "1-1-2 (down-pause-up)",
+  "rest": 60,
+  "images": [
+   "images/warmup-bent-over-i-s-y-s-and-t-s/0.jpg",
+   "images/warmup-bent-over-i-s-y-s-and-t-s/1.jpg"
+  ],
+  "imageSource": "free-exercise-db: Seated_Bent-Over_Rear_Delt_Raise",
+  "imageIsApprox": true
+ }
+}
