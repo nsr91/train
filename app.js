@@ -294,14 +294,15 @@ function viewSettings() {
   <h2>Your data</h2>
   <div class="card">
     <p class="small muted" style="margin-bottom:12px">Everything is stored only on this phone (${Math.round(bytes / 1024)} KB). Back up now and then — deleting the app or clearing Safari data erases it.</p>
-    <button class="btn" data-act="excel">Export to Excel</button>
+    <button class="btn" data-act="excelsheet">Export to Excel (your sheet)</button>
+    <button class="btn sec" data-act="excel">Export detailed log + notes</button>
     <button class="btn sec" data-act="backup">Back up (file)</button>
     <label class="btn sec" style="margin-top:10px">Restore from backup<input type="file" accept="application/json,.json" data-act="restore" hidden></label>
   </div>
   <div class="card"><button class="btn danger" data-act="reset">Erase all data</button></div>
   <p class="tiny muted" style="text-align:center;margin-top:16px">Train · ${esc(PLAN.athlete)} · ${esc(PLAN.block)} · v${APP_VERSION}</p>`;
 }
-const APP_VERSION = '1.2.0';
+const APP_VERSION = '1.3.0';
 
 /* ---------- exercise info sheet ---------- */
 function openInfo(id) {
@@ -408,7 +409,58 @@ async function deliverFile(blob, name) {
 function summarize(sets) {
   const ds = doneSets(sets); if (!ds.length) return '';
   const same = ds.every(s => s.kg === ds[0].kg && s.reps === ds[0].reps);
-  return same ? `${ds.length} x ${fmt(ds[0].reps)} x ${fmt(ds[0].kg)}` : ds.map(s => `${fmt(s.kg)}x${fmt(s.reps)}`).join(', ');
+  if (same) return `${ds.length} x ${fmt(ds[0].reps)} x ${fmt(ds[0].kg)}`;
+  // Same "sets x reps x load" style as the coach's sheet, grouping consecutive identical sets.
+  // e.g. "2 x 12/10 x 100" (same load) or "2 x 12/10 x 100/105" (load changed)
+  const reps = ds.map(x => fmt(x.reps)), kgs = ds.map(x => fmt(x.kg));
+  const one = a => a.every(v => v === a[0]) ? a[0] : a.join('/');
+  return `${ds.length} x ${one(reps)} x ${one(kgs)}`;
+}
+/** Fill the coach's original workbook (kept as a template) so the export looks exactly like it. */
+async function exportSheetFormat() {
+  if (!window.JSZip) return toast('Still loading — try again');
+  const X = PLAN.excel; if (!X) return exportExcel();
+  toast('Preparing Excel…');
+  try {
+    const buf = await fetch(X.template).then(r => { if (!r.ok) throw new Error('template'); return r.arrayBuffer(); });
+    const zip = await JSZip.loadAsync(buf);
+    const xml = await zip.file(X.sheet).async('string');
+    const doc = new DOMParser().parseFromString(xml, 'application/xml');
+    const NS = doc.documentElement.namespaceURI;
+    const sheetData = doc.getElementsByTagNameNS(NS, 'sheetData')[0];
+    const rowsByN = {}; for (const r of sheetData.getElementsByTagNameNS(NS, 'row')) rowsByN[r.getAttribute('r')] = r;
+    const colNum = ref => ref.replace(/\d+/g, '').split('').reduce((a, c) => a * 26 + c.charCodeAt(0) - 64, 0);
+    function cell(ref) {
+      const rn = ref.replace(/[A-Z]+/g, '');
+      let row = rowsByN[rn];
+      if (!row) {
+        row = doc.createElementNS(NS, 'row'); row.setAttribute('r', rn); rowsByN[rn] = row;
+        const after = [...sheetData.getElementsByTagNameNS(NS, 'row')].find(r => +r.getAttribute('r') > +rn);
+        sheetData.insertBefore(row, after || null);
+      }
+      let c = [...row.getElementsByTagNameNS(NS, 'c')].find(x => x.getAttribute('r') === ref);
+      if (!c) {
+        c = doc.createElementNS(NS, 'c'); c.setAttribute('r', ref);
+        const after = [...row.getElementsByTagNameNS(NS, 'c')].find(x => colNum(x.getAttribute('r')) > colNum(ref));
+        row.insertBefore(c, after || null);
+      }
+      return c;
+    }
+    function put(ref, text) {
+      const c = cell(ref);
+      while (c.firstChild) c.removeChild(c.firstChild);
+      c.removeAttribute('t');
+      if (text) { c.setAttribute('t', 'inlineStr'); const is = doc.createElementNS(NS, 'is'), t = doc.createElementNS(NS, 't'); t.textContent = text; is.appendChild(t); c.appendChild(is); }
+    }
+    PLAN.days.forEach(d => d.exercises.forEach(e => {
+      const row = X.rows[d.id] && X.rows[d.id][e.id]; if (!row) return;
+      X.weekCols.forEach((col, i) => { const s = session(i + 1, d.id); put(col + row, s ? summarize(s.sets[e.id]) : ''); });
+    }));
+    zip.file(X.sheet, new XMLSerializer().serializeToString(doc));
+    zip.remove('xl/calcChain.xml');
+    const blob = await zip.generateAsync({ type: 'blob', compression: 'DEFLATE', mimeType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    deliverFile(blob, `${PLAN.athlete}_${PLAN.block.replace(/\s+/g, '_')}_${new Date().toISOString().slice(0, 10)}.xlsx`);
+  } catch (err) { toast('Could not build the Excel file'); }
 }
 function exportExcel() {
   if (!window.XLSX) return toast('Excel library still loading — try again');
@@ -476,6 +528,7 @@ document.addEventListener('click', e => {
   else if (a === 't-plus') nudgeTimer(15);
   else if (a === 't-skip') stopTimer();
   else if (a === 'excel') exportExcel();
+  else if (a === 'excelsheet') exportSheetFormat();
   else if (a === 'backup') backup();
   else if (a === 'reset') { if (confirm('Erase every logged workout on this phone? This cannot be undone.') && confirm('Really erase? Consider a backup first.')) { localStorage.removeItem(KEY); stopTimer(); load(); toast('Data erased'); route(); } }
 });

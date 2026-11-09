@@ -369,5 +369,63 @@
  "coachNotes": {
   "hanging-leg-raise": "Grip just outside the shoulders. Deadhang, hands are hooks and arms are ropes. Depress the scaps and lock them down. Posterior tilt the pelvis under you (scared dog position). Slowly lift the straightened legs out as far from you as you can, don't think \"up\". pause, come down slow. Don't let shoulders cave or the hips turn behind you \"instahoe-duckbutt position)",
   "cable-cross-y-raise-lying-or-standing": "I set this up by laying on the ground and setting the cable cams on a close cable stack 3 pins above the height on my chest as a set up. If you want to do it on a bench, use the same rule of thumb for the distance in front of the body the cams are raised from the sternum and use a low-moderate angle on the bench.bottom 3 inches are where the money is. initiate super slow and controlled. SUPER SLOW. then carry through to the end. think out not up and do not use a load that forces you to shrug to move the weight."
+ },
+ "excel": {
+  "template": "data/template.xlsx",
+  "sheet": "xl/worksheets/sheet2.xml",
+  "weekCols": [
+   "F",
+   "G",
+   "H",
+   "I",
+   "J",
+   "K",
+   "L",
+   "M"
+  ],
+  "rows": {
+   "1": {
+    "cable-cross-y-raise-lying-or-standing": 7,
+    "incline-plate-loaded-press": 8,
+    "flat-plate-loaded-press": 9,
+    "lateral-raise-machine": 10,
+    "cable-triceps-pressdown": 11,
+    "cross-body-triceps-cable": 12,
+    "reverse-pec-deck": 13
+   },
+   "2": {
+    "hanging-leg-raise": 19,
+    "lat-pulldown-medium-grip": 20,
+    "sa-diagonal-pull-lat-bias": 21,
+    "chest-supported-row-lat-bias": 22,
+    "machine-row-for-rear-delts": 23,
+    "preacher-curl-machine": 24
+   },
+   "3": {
+    "leg-extension": 30,
+    "calf-raise": 31,
+    "leg-press": 32,
+    "hamstring-curls": 33,
+    "romanian-deadlift-rdl": 34,
+    "planks": 35
+   },
+   "4": {
+    "cable-cross-y-raise-lying-or-standing": 41,
+    "flat-plate-loaded-press": 42,
+    "incline-plate-loaded-press": 43,
+    "sa-lateral-raise-cable-knee-height": 44,
+    "cable-triceps-pressdown": 45,
+    "sa-triceps-ext-straight-from-shoulder": 46
+   },
+   "5": {
+    "hanging-leg-raise": 52,
+    "lat-pulldown-neutral-grip": 53,
+    "chest-supported-row-lat-bias": 54,
+    "seated-row-upper-back-bias": 55,
+    "rear-delt-cable-fly-bilateral": 56,
+    "cable-rope-hammer-drag-curl": 57,
+    "bicep-curl-machine": 58
+   }
+  }
  }
 }
