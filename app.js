@@ -182,10 +182,10 @@ function exCard(ex, s, idx, w, d, i) {
     const phR = String(ex.repMax ?? '');
     rows += `<div class="set ${cur.done ? 'done' : ''}" data-ex="${ex.id}" data-k="${k}">
       <span class="n">${k + 1}</span>
-      <span class="prev">${prev ? `${fmt(prev.kg)}×${fmt(prev.reps)}` : '—'}</span>
-      <input inputmode="decimal" enterkeyhint="next" aria-label="Set ${k + 1} kg" data-f="kg" value="${esc(vKg)}" placeholder="${esc(phKg)}">
-      <input inputmode="numeric" pattern="[0-9]*" enterkeyhint="done" aria-label="Set ${k + 1} ${isSec ? 'seconds' : 'reps'}" data-f="reps" value="${esc(vR)}" placeholder="${esc(phR)}">
+      <div class="step"><button class="sb" data-act="step" data-f="kg" data-d="-1" aria-label="Less weight">−</button><input inputmode="decimal" enterkeyhint="next" aria-label="Set ${k + 1} kg" data-f="kg" value="${esc(vKg)}" placeholder="${esc(phKg)}"><button class="sb" data-act="step" data-f="kg" data-d="1" aria-label="More weight">+</button></div>
+      <div class="step"><button class="sb" data-act="step" data-f="reps" data-d="-1" aria-label="Fewer ${isSec ? 'seconds' : 'reps'}">−</button><input inputmode="numeric" pattern="[0-9]*" enterkeyhint="done" aria-label="Set ${k + 1} ${isSec ? 'seconds' : 'reps'}" data-f="reps" value="${esc(vR)}" placeholder="${esc(phR)}"><button class="sb" data-act="step" data-f="reps" data-d="1" aria-label="More ${isSec ? 'seconds' : 'reps'}">+</button></div>
       <button class="ok" data-act="set" aria-label="Complete set ${k + 1}">✓</button>
+      ${prev ? `<span class="prevcap">Last: ${fmt(prev.kg)} kg × ${fmt(prev.reps)}${isSec ? ' s' : ''}</span>` : ''}
     </div>`;
   }
   return `<section class="ex ${complete ? 'complete' : ''}" id="ex-${ex.id}">
@@ -197,7 +197,7 @@ function exCard(ex, s, idx, w, d, i) {
     ${sg ? `<div style="margin-top:8px"><span class="badge b-${sg.type}">${esc(sg.text)}</span></div>` : ''}
     ${note ? `<div class="tiny muted" style="margin-top:6px">Coach note available — tap ⓘ</div>` : ''}
     <div class="sets">
-      <div class="sethdr"><span style="text-align:center">Set</span><span style="text-align:center">Last</span><span style="text-align:center">kg</span><span style="text-align:center">${isSec ? 'Sec' : 'Reps'}</span><span></span></div>
+      <div class="sethdr"><span style="text-align:center">Set</span><span style="text-align:center">kg</span><span style="text-align:center">${isSec ? 'Sec' : 'Reps'}</span><span></span></div>
       ${rows}
       <button class="addset" data-act="addset" data-ex="${ex.id}">+ Add set</button>
     </div>
@@ -288,6 +288,8 @@ function viewSettings() {
     <div style="margin-top:14px;font-weight:600">Default rest</div>
     <select data-act="restdef" style="margin-top:6px">${[60, 90, 120, 150, 180].map(v => `<option value="${v}" ${v === S.settings.restDefault ? 'selected' : ''}>${Math.floor(v / 60)}:${String(v % 60).padStart(2, '0')}</option>`).join('')}</select>
     <div class="tiny muted" style="margin-top:6px">Used when an exercise has no suggested rest.</div>
+    <div style="margin-top:14px;font-weight:600">Weight step for + / −</div>
+    <select data-act="kgstep" style="margin-top:6px">${[1, 1.25, 2.5, 5].map(v => `<option value="${v}" ${v === (S.settings.kgStep || 2.5) ? 'selected' : ''}>${v} kg</option>`).join('')}</select>
   </div>
   <h2>Your data</h2>
   <div class="card">
@@ -299,7 +301,7 @@ function viewSettings() {
   <div class="card"><button class="btn danger" data-act="reset">Erase all data</button></div>
   <p class="tiny muted" style="text-align:center;margin-top:16px">Train · ${esc(PLAN.athlete)} · ${esc(PLAN.block)} · v${APP_VERSION}</p>`;
 }
-const APP_VERSION = '1.1.0';
+const APP_VERSION = '1.2.0';
 
 /* ---------- exercise info sheet ---------- */
 function openInfo(id) {
@@ -459,6 +461,14 @@ document.addEventListener('click', e => {
   if (a === 'info') { e.preventDefault(); openInfo(t.dataset.id); }
   else if (a === 'close') closeSheet();
   else if (a === 'set') toggleSet(t.closest('.set'));
+  else if (a === 'step') {
+    const inp = t.parentElement.querySelector('input'); const isKg = t.dataset.f === 'kg';
+    const exId = t.closest('.set').dataset.ex; const ex = PLAN.days.flatMap(q => q.exercises).find(q => q.id === exId);
+    const step = isKg ? (S.settings.kgStep || 2.5) : (ex && ex.unit === 'sec' ? 5 : 1);
+    let v = num(inp.value); v = (v === '' || isNaN(+v)) ? (num(inp.placeholder) || 0) : +v;
+    v = Math.max(0, Math.round((v + step * +t.dataset.d) * 100) / 100);
+    inp.value = fmt(v); onSetInput(inp);
+  }
   else if (a === 'addset') { const m = location.hash.match(/#\/w\/(\d+)\/(\d+)/); const s = session(+m[1], +m[2], true); (s.sets[t.dataset.ex] = s.sets[t.dataset.ex] || []); const ex = PLAN.days.flatMap(d => d.exercises).find(x => x.id === t.dataset.ex); while (s.sets[t.dataset.ex].length < ex.sets) s.sets[t.dataset.ex].push({ kg: '', reps: '', done: false }); s.sets[t.dataset.ex].push({ kg: '', reps: '', done: false }); save(); const y = window.scrollY; route(); window.scrollTo(0, y); }
   else if (a === 'finish') { const s = session(+t.dataset.w, +t.dataset.d, true); const any = Object.values(s.sets).some(x => doneSets(x).length); if (!any && !confirm('No sets ticked. Mark this workout as done anyway?')) return; s.finished = true; s.date = s.date || new Date().toISOString(); save(); stopTimer(); toast('Workout saved'); location.hash = '#/'; }
   else if (a === 'week') { const nw = Math.min(PLAN.weeks, Math.max(1, S.week + +t.dataset.dir)); if (nw !== S.week) { S.week = nw; save(); } location.hash = '#/'; route(); }
@@ -476,6 +486,7 @@ document.addEventListener('change', e => {
   if (a === 'pickex') location.hash = '#/progress?ex=' + e.target.value;
   else if (a === 'sound') { S.settings.sound = e.target.checked; save(); if (e.target.checked) { unlockAudio(); beep(); } }
   else if (a === 'restdef') { S.settings.restDefault = +e.target.value; save(); }
+  else if (a === 'kgstep') { S.settings.kgStep = +e.target.value; save(); }
   else if (a === 'restore' && e.target.files[0]) restore(e.target.files[0]);
 });
 document.addEventListener('keydown', e => {

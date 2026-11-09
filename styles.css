@@ -41,7 +41,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .ex.complete{opacity:.72}
 .exhead{display:flex;gap:12px;align-items:center}
 .sets{margin-top:10px}
-.sethdr,.set{display:grid;grid-template-columns:30px 1fr 1fr 1fr 44px;gap:8px;align-items:center}
+.sethdr,.set{display:grid;grid-template-columns:22px minmax(0,1fr) minmax(0,1fr) 44px;gap:6px;align-items:center}
 .sethdr{font-size:12px;color:var(--dim);padding:0 0 4px}
 .set{margin:6px 0}
 .set .n{color:var(--muted);font-weight:600;text-align:center}
@@ -97,3 +97,12 @@ textarea.note-in{display:block;width:100%;margin-top:10px;background:var(--card2
 textarea.note-in:focus{outline:none;border-color:var(--acc)}
 textarea.note-in::placeholder{color:var(--dim)}
 .lastnote{margin-top:10px;font-size:13px;background:rgba(198,244,50,.06);border-radius:8px;padding:8px 10px}
+
+.step{display:flex;align-items:stretch;background:var(--card2);border-radius:10px;overflow:hidden;min-width:0}
+.step input{border:0!important;background:transparent!important;border-radius:0!important;padding:0 2px!important}
+.step .sb{flex:none;width:34px;height:44px;font-size:22px;font-weight:500;color:var(--muted);touch-action:manipulation;-webkit-user-select:none;user-select:none}
+.step .sb:active{background:rgba(255,255,255,.08);color:var(--text)}
+.set.done .step{background:rgba(90,209,154,.1)}
+.step:focus-within{box-shadow:inset 0 0 0 1.5px var(--acc)}
+.set .prevcap{grid-column:2 / 4;font-size:12px;color:var(--dim);margin:-2px 0 2px 4px}
+@media (max-width:360px){main{padding-left:12px;padding-right:12px}.ex{padding:12px 10px}.sethdr,.set{gap:4px;grid-template-columns:18px minmax(0,1fr) minmax(0,1fr) 40px}.step .sb{width:24px;font-size:18px}.set input{font-size:16px;letter-spacing:-.02em}}
