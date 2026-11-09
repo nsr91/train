@@ -61,6 +61,16 @@ function lastPerf(exId, beforeIdx) {
   for (const x of list) { const ds = doneSets(x.s.sets[exId]); if (ds.length) return { w: x.w, d: x.d, sets: ds }; }
   return null;
 }
+/** Same day last week if logged, otherwise the most recent session with this exercise. */
+function lastWeekPerf(exId, w, d) {
+  if (w > 1) { const s = session(w - 1, d); const ds = s && doneSets(s.sets[exId]); if (ds && ds.length) return { w: w - 1, d, sets: ds }; }
+  return lastPerf(exId, sessIdx(w, d));
+}
+function lastNote(exId, beforeIdx) {
+  const list = sessionsOrdered().filter(x => x.idx < beforeIdx).reverse();
+  for (const x of list) { const n = x.s.notes && x.s.notes[exId]; if (n && n.trim()) return { w: x.w, d: x.d, text: n }; }
+  return null;
+}
 const e1rm = (kg, reps) => (+kg > 0 && +reps > 0) ? +kg * (1 + Math.min(+reps, 15) / 30) : 0;
 
 /** Progression suggestion: double progression on the sheet's rep ranges. Advisory only. */
@@ -118,7 +128,7 @@ function viewHome(params) {
   ${s && s.finished ? `<p class="small muted" style="margin-top:-6px">Done${s.date ? ' · ' + new Date(s.date).toLocaleDateString() : ' (from your sheet)'}</p>` : ''}
   <div class="card" style="padding:4px 14px">
     ${day.exercises.map(ex => {
-      const lp = lastPerf(ex.id, idx); const sg = suggest(ex, lp);
+      const lp = lastWeekPerf(ex.id, w, sel); const sg = suggest(ex, lp);
       const mine = doneSets(s && s.sets[ex.id]);
       const ok = mine.length >= ex.sets;
       return `<div class="exrow" data-act="info" data-id="${ex.id}">
@@ -146,11 +156,14 @@ function viewWorkout(w, d) {
   <div class="row between"><a href="#/?d=${d}" class="muted back">‹ Back</a><span class="eyebrow">Week ${w}</span></div>
   <h1 style="margin-top:8px">${esc(day.name)} · ${esc(day.focus)}</h1>
   ${day.exercises.map((ex, i) => exCard(ex, s, idx, w, d, i)).join('')}
+  <div class="ex"><h3>Workout notes</h3><textarea class="note-in" data-note="_workout" rows="3" placeholder="Energy, sleep, gym busy, anything to remember…" aria-label="Workout notes">${esc((s.notes && s.notes._workout) || '')}</textarea></div>
   <button class="btn" data-act="finish" data-w="${w}" data-d="${d}" style="margin-top:18px">${s.finished ? 'Save changes' : 'Finish workout'}</button>`;
 }
 
 function exCard(ex, s, idx, w, d, i) {
-  const lp = lastPerf(ex.id, idx);
+  const lp = lastWeekPerf(ex.id, w, d);
+  const ln = lastNote(ex.id, idx);
+  const myNote = (s.notes && s.notes[ex.id]) || '';
   const sg = suggest(ex, lp);
   const mine = s.sets[ex.id] || [];
   const n = Math.max(ex.sets, mine.length);
@@ -161,13 +174,17 @@ function exCard(ex, s, idx, w, d, i) {
   for (let k = 0; k < n; k++) {
     const cur = mine[k] || {};
     const prev = lp && (lp.sets[k] || lp.sets[lp.sets.length - 1]);
-    const phKg = sg ? fmt(sg.kg) : prev ? fmt(prev.kg) : '';
-    const phR = (sg && sg.type === 'up' && sg.kg > 0 && ex.unit !== 'sec' && ex.repMin) ? String(ex.repMin) : prev ? fmt(prev.reps) : String(ex.repMax ?? '');
+    // Default = last week's numbers, filled in; the user overwrites when needed.
+    const has = v => v !== undefined && v !== null && v !== '';
+    const vKg = has(cur.kg) ? fmt(cur.kg) : prev ? fmt(prev.kg) : '';
+    const vR = has(cur.reps) ? fmt(cur.reps) : prev ? fmt(prev.reps) : '';
+    const phKg = '';
+    const phR = String(ex.repMax ?? '');
     rows += `<div class="set ${cur.done ? 'done' : ''}" data-ex="${ex.id}" data-k="${k}">
       <span class="n">${k + 1}</span>
       <span class="prev">${prev ? `${fmt(prev.kg)}×${fmt(prev.reps)}` : '—'}</span>
-      <input inputmode="decimal" enterkeyhint="next" aria-label="Set ${k + 1} kg" data-f="kg" value="${esc(fmt(cur.kg))}" placeholder="${esc(phKg)}">
-      <input inputmode="numeric" pattern="[0-9]*" enterkeyhint="done" aria-label="Set ${k + 1} ${isSec ? 'seconds' : 'reps'}" data-f="reps" value="${esc(fmt(cur.reps))}" placeholder="${esc(phR)}">
+      <input inputmode="decimal" enterkeyhint="next" aria-label="Set ${k + 1} kg" data-f="kg" value="${esc(vKg)}" placeholder="${esc(phKg)}">
+      <input inputmode="numeric" pattern="[0-9]*" enterkeyhint="done" aria-label="Set ${k + 1} ${isSec ? 'seconds' : 'reps'}" data-f="reps" value="${esc(vR)}" placeholder="${esc(phR)}">
       <button class="ok" data-act="set" aria-label="Complete set ${k + 1}">✓</button>
     </div>`;
   }
@@ -184,6 +201,8 @@ function exCard(ex, s, idx, w, d, i) {
       ${rows}
       <button class="addset" data-act="addset" data-ex="${ex.id}">+ Add set</button>
     </div>
+    ${ln ? `<div class="lastnote"><span class="muted">Last note (W${ln.w} D${ln.d}):</span> ${esc(ln.text)}</div>` : ''}
+    <textarea class="note-in" data-note="${ex.id}" rows="2" placeholder="Notes — seat setting, how it felt…" aria-label="Notes for ${esc(ex.name)}">${esc(myNote)}</textarea>
   </section>`;
 }
 const restSecs = id => (EX[id] && EX[id].rest) || S.settings.restDefault;
@@ -280,7 +299,7 @@ function viewSettings() {
   <div class="card"><button class="btn danger" data-act="reset">Erase all data</button></div>
   <p class="tiny muted" style="text-align:center;margin-top:16px">Train · ${esc(PLAN.athlete)} · ${esc(PLAN.block)} · v${APP_VERSION}</p>`;
 }
-const APP_VERSION = '1.0.2';
+const APP_VERSION = '1.1.0';
 
 /* ---------- exercise info sheet ---------- */
 function openInfo(id) {
@@ -404,6 +423,10 @@ function exportExcel() {
   const ws1 = XLSX.utils.aoa_to_sheet(rows); ws1['!cols'] = [{ wch: 3 }, { wch: 7 }, { wch: 40 }, { wch: 6 }, { wch: 9 }, ...Array(PLAN.weeks).fill({ wch: 18 })];
   const ws2 = XLSX.utils.aoa_to_sheet(log); ws2['!cols'] = [{ wch: 12 }, { wch: 6 }, { wch: 5 }, { wch: 7 }, { wch: 40 }, { wch: 5 }, { wch: 7 }, { wch: 10 }, { wch: 9 }];
   XLSX.utils.book_append_sheet(wb, ws1, PLAN.block.slice(0, 31)); XLSX.utils.book_append_sheet(wb, ws2, 'Set log');
+  const notes = [['Date', 'Week', 'Day', 'Exercise', 'Note']];
+  sessionsOrdered().forEach(x => { const day = dayById(x.d); if (!day || !x.s.notes) return; Object.entries(x.s.notes).forEach(([id, t]) => { if (!t || !t.trim()) return; const e = day.exercises.find(q => q.id === id); notes.push([x.s.date ? new Date(x.s.date).toLocaleDateString('en-GB') : '', x.w, x.d, id === '_workout' ? 'Workout' : (e ? e.name : id), t.trim()]); }); });
+  const ws3 = XLSX.utils.aoa_to_sheet(notes); ws3['!cols'] = [{ wch: 12 }, { wch: 6 }, { wch: 5 }, { wch: 36 }, { wch: 60 }];
+  XLSX.utils.book_append_sheet(wb, ws3, 'Notes');
   const out = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
   deliverFile(new Blob([out], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }), `${PLAN.athlete}_${PLAN.block.replace(/\s+/g, '_')}_${new Date().toISOString().slice(0, 10)}.xlsx`);
 }
@@ -446,7 +469,8 @@ document.addEventListener('click', e => {
   else if (a === 'backup') backup();
   else if (a === 'reset') { if (confirm('Erase every logged workout on this phone? This cannot be undone.') && confirm('Really erase? Consider a backup first.')) { localStorage.removeItem(KEY); stopTimer(); load(); toast('Data erased'); route(); } }
 });
-document.addEventListener('input', e => { if (e.target.matches('.set input')) onSetInput(e.target); });
+document.addEventListener('input', e => {
+  if (e.target.matches('textarea.note-in')) { const m = location.hash.match(/#\/w\/(\d+)\/(\d+)/); if (!m) return; const s = session(+m[1], +m[2], true); (s.notes = s.notes || {})[e.target.dataset.note] = e.target.value; save(); return; } if (e.target.matches('.set input')) onSetInput(e.target); });
 document.addEventListener('change', e => {
   const a = e.target.dataset.act;
   if (a === 'pickex') location.hash = '#/progress?ex=' + e.target.value;

@@ -92,3 +92,8 @@ table.pr td:last-child{text-align:right;font-variant-numeric:tabular-nums}
 .bar i{display:block;height:100%;background:var(--acc)}
 .back{display:inline-block;padding:10px 12px 10px 0}
 ul.clean li>a[data-act]{display:inline-block;padding:6px 0}
+
+textarea.note-in{display:block;width:100%;margin-top:10px;background:var(--card2);color:var(--text);border:1.5px solid transparent;border-radius:10px;padding:10px 12px;font:400 16px/1.4 -apple-system,BlinkMacSystemFont,system-ui,sans-serif;resize:vertical;-webkit-appearance:none}
+textarea.note-in:focus{outline:none;border-color:var(--acc)}
+textarea.note-in::placeholder{color:var(--dim)}
+.lastnote{margin-top:10px;font-size:13px;background:rgba(198,244,50,.06);border-radius:8px;padding:8px 10px}
