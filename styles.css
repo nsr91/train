@@ -106,3 +106,55 @@ textarea.note-in::placeholder{color:var(--dim)}
 .step:focus-within{box-shadow:inset 0 0 0 1.5px var(--acc)}
 .set .prevcap{grid-column:2 / 4;font-size:12px;color:var(--dim);margin:-2px 0 2px 4px}
 @media (max-width:360px){main{padding-left:12px;padding-right:12px}.ex{padding:12px 10px}.sethdr,.set{gap:4px;grid-template-columns:18px minmax(0,1fr) minmax(0,1fr) 40px}.step .sb{width:24px;font-size:18px}.set input{font-size:16px;letter-spacing:-.02em}}
+
+.navbtn{width:44px;height:40px;border-radius:10px;background:var(--card2);display:grid;place-items:center;font-size:20px}
+.mrow{display:grid;grid-template-columns:82px minmax(0,1fr) 54px 26px;gap:8px;align-items:center;padding:5px 0;font-size:13px}
+.mname{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mbar{position:relative;height:12px;border-radius:6px;background:var(--card2);overflow:hidden}
+.mbar i{position:absolute;left:0;top:0;bottom:0;border-radius:6px}
+.mbar i.plan{background:#3a3e44}
+.mbar i.done.lo{background:var(--warn)}.mbar i.done.ok{background:var(--good)}.mbar i.done.hi{background:#7aa2ff}
+.mbar b{position:absolute;top:0;bottom:0;width:1px;background:rgba(255,255,255,.35)}
+.mval{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
+.mfreq{font-size:11px;text-align:center;border-radius:6px;background:var(--card2);color:var(--muted);padding:2px 0}
+.mfreq.one{color:var(--warn)}
+.legend{display:flex;gap:14px;margin-top:8px;color:var(--muted)}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.legend i.lo{background:var(--warn)}.legend i.ok{background:var(--good)}.legend i.hi{background:#7aa2ff}
+.srow{display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid var(--line)}
+.srow:last-child{border-bottom:0}
+.chg{font-size:13px;font-weight:700;font-variant-numeric:tabular-nums;color:var(--muted)}
+.chg.pos{color:var(--good)}.chg.neg{color:var(--bad)}
+.st{flex:none;font-size:11px;font-weight:700;padding:4px 8px;border-radius:7px;white-space:nowrap}
+.st-pr{background:rgba(90,209,154,.15);color:var(--good)}
+.st-up{background:rgba(198,244,50,.14);color:var(--acc)}
+.st-stall{background:rgba(242,184,75,.15);color:var(--warn)}
+.st-ok{background:var(--card2);color:var(--muted)}
+.st-new{background:var(--card2);color:var(--dim)}
+.rir{margin-top:10px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.rirchips{display:flex;gap:6px}
+.rirchips button{min-width:38px;height:36px;border-radius:9px;background:var(--card2);font-weight:700;font-size:14px;color:var(--muted);touch-action:manipulation}
+.rirchips button.on{background:var(--acc);color:var(--acc-ink)}
+.rirhist{display:flex;gap:6px;align-items:flex-end;height:62px}
+.rirhist div{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:11px;color:var(--dim)}
+.rirhist i{display:block;width:16px;border-radius:4px;background:#3a3e44}
+.rirhist i.in{background:var(--good)}
+.card a:not(.btn){color:var(--acc)}
+.srow{color:inherit!important}
+@media (max-width:360px){.mrow{grid-template-columns:70px minmax(0,1fr) 48px 24px;gap:6px;font-size:12px}.rirchips button{min-width:32px}.rir{flex-wrap:wrap}}
+
+details.more summary{padding:12px 0;color:var(--acc);font-size:14px;font-weight:600;list-style:none;cursor:pointer}
+details.more summary::-webkit-details-marker{display:none}
+details.more[open] summary{border-bottom:1px solid var(--line)}
+
+.myphotos{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:10px 0 6px}
+.myphotos .ph{position:relative;aspect-ratio:1;border-radius:10px;overflow:hidden;background:var(--card2)}
+.myphotos .ph img{width:100%;height:100%;object-fit:cover;display:block}
+.myphotos .ph button{position:absolute;top:4px;right:4px;width:26px;height:26px;border-radius:50%;background:rgba(0,0,0,.6);color:#fff;font-size:13px}
+.myphotos .add{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:var(--acc);border:1.5px dashed var(--line);text-align:center;padding:4px;cursor:pointer}
+.myphotos .add span:first-child{font-size:22px;line-height:1}
+.myphotos:has(.ph:only-child.add){grid-template-columns:1fr}
+.myphotos .ph.add:only-child{aspect-ratio:auto;padding:14px;flex-direction:row;gap:8px}
+.myphotos .ph.big{grid-column:1/-1;aspect-ratio:auto;background:#000}
+.myphotos .ph.big img{height:auto;max-height:70vh;object-fit:contain}
+.myphotos .ph img{cursor:zoom-in}

@@ -16,6 +16,16 @@
    "focus": "Push",
    "exercises": [
     {
+     "id": "hanging-leg-raise",
+     "name": "Hanging leg raise",
+     "sets": 2,
+     "reps": "12-20",
+     "repMin": 12,
+     "repMax": 20,
+     "unit": "reps",
+     "history": {}
+    },
+    {
      "id": "cable-cross-y-raise-lying-or-standing",
      "name": "Cable cross Y raise (lying or standing)",
      "sets": 2,
@@ -160,6 +170,16 @@
    "focus": "Legs",
    "exercises": [
     {
+     "id": "hanging-leg-raise",
+     "name": "Hanging leg raise",
+     "sets": 2,
+     "reps": "12-20",
+     "repMin": 12,
+     "repMax": 20,
+     "unit": "reps",
+     "history": {}
+    },
+    {
      "id": "leg-extension",
      "name": "Leg extension",
      "sets": 2,
@@ -226,6 +246,16 @@
    "name": "Day 4",
    "focus": "Push",
    "exercises": [
+    {
+     "id": "hanging-leg-raise",
+     "name": "Hanging leg raise",
+     "sets": 2,
+     "reps": "12-20",
+     "repMin": 12,
+     "repMax": 20,
+     "unit": "reps",
+     "history": {}
+    },
     {
      "id": "cable-cross-y-raise-lying-or-standing",
      "name": "Cable cross Y raise (lying or standing)",
@@ -385,47 +415,237 @@
   ],
   "rows": {
    "1": {
-    "cable-cross-y-raise-lying-or-standing": 7,
-    "incline-plate-loaded-press": 8,
-    "flat-plate-loaded-press": 9,
-    "lateral-raise-machine": 10,
-    "cable-triceps-pressdown": 11,
-    "cross-body-triceps-cable": 12,
-    "reverse-pec-deck": 13
+    "hanging-leg-raise": 7,
+    "cable-cross-y-raise-lying-or-standing": 8,
+    "incline-plate-loaded-press": 9,
+    "flat-plate-loaded-press": 10,
+    "lateral-raise-machine": 11,
+    "cable-triceps-pressdown": 12,
+    "cross-body-triceps-cable": 13,
+    "reverse-pec-deck": 14
    },
    "2": {
-    "hanging-leg-raise": 19,
-    "lat-pulldown-medium-grip": 20,
-    "sa-diagonal-pull-lat-bias": 21,
-    "chest-supported-row-lat-bias": 22,
-    "machine-row-for-rear-delts": 23,
-    "preacher-curl-machine": 24
+    "hanging-leg-raise": 20,
+    "lat-pulldown-medium-grip": 21,
+    "sa-diagonal-pull-lat-bias": 22,
+    "chest-supported-row-lat-bias": 23,
+    "machine-row-for-rear-delts": 24,
+    "preacher-curl-machine": 25
    },
    "3": {
-    "leg-extension": 30,
-    "calf-raise": 31,
-    "leg-press": 32,
-    "hamstring-curls": 33,
-    "romanian-deadlift-rdl": 34,
-    "planks": 35
+    "hanging-leg-raise": 31,
+    "leg-extension": 32,
+    "calf-raise": 33,
+    "leg-press": 34,
+    "hamstring-curls": 35,
+    "romanian-deadlift-rdl": 36,
+    "planks": 37
    },
    "4": {
-    "cable-cross-y-raise-lying-or-standing": 41,
-    "flat-plate-loaded-press": 42,
-    "incline-plate-loaded-press": 43,
-    "sa-lateral-raise-cable-knee-height": 44,
-    "cable-triceps-pressdown": 45,
-    "sa-triceps-ext-straight-from-shoulder": 46
+    "hanging-leg-raise": 43,
+    "cable-cross-y-raise-lying-or-standing": 44,
+    "flat-plate-loaded-press": 45,
+    "incline-plate-loaded-press": 46,
+    "sa-lateral-raise-cable-knee-height": 47,
+    "cable-triceps-pressdown": 48,
+    "sa-triceps-ext-straight-from-shoulder": 49
    },
    "5": {
-    "hanging-leg-raise": 52,
-    "lat-pulldown-neutral-grip": 53,
-    "chest-supported-row-lat-bias": 54,
-    "seated-row-upper-back-bias": 55,
-    "rear-delt-cable-fly-bilateral": 56,
-    "cable-rope-hammer-drag-curl": 57,
-    "bicep-curl-machine": 58
+    "hanging-leg-raise": 55,
+    "lat-pulldown-neutral-grip": 56,
+    "chest-supported-row-lat-bias": 57,
+    "seated-row-upper-back-bias": 58,
+    "rear-delt-cable-fly-bilateral": 59,
+    "cable-rope-hammer-drag-curl": 60,
+    "bicep-curl-machine": 61
    }
+  }
+ },
+ "muscleMap": {
+  "cable-cross-y-raise-lying-or-standing": {
+   "p": [
+    "Side delts"
+   ],
+   "s": []
+  },
+  "incline-plate-loaded-press": {
+   "p": [
+    "Chest"
+   ],
+   "s": [
+    "Front delts",
+    "Triceps"
+   ]
+  },
+  "flat-plate-loaded-press": {
+   "p": [
+    "Chest"
+   ],
+   "s": [
+    "Front delts",
+    "Triceps"
+   ]
+  },
+  "lateral-raise-machine": {
+   "p": [
+    "Side delts"
+   ],
+   "s": []
+  },
+  "cable-triceps-pressdown": {
+   "p": [
+    "Triceps"
+   ],
+   "s": []
+  },
+  "cross-body-triceps-cable": {
+   "p": [
+    "Triceps"
+   ],
+   "s": []
+  },
+  "reverse-pec-deck": {
+   "p": [
+    "Rear delts"
+   ],
+   "s": [
+    "Upper back"
+   ]
+  },
+  "hanging-leg-raise": {
+   "p": [
+    "Abs"
+   ],
+   "s": []
+  },
+  "lat-pulldown-medium-grip": {
+   "p": [
+    "Lats"
+   ],
+   "s": [
+    "Biceps",
+    "Upper back"
+   ]
+  },
+  "sa-diagonal-pull-lat-bias": {
+   "p": [
+    "Lats"
+   ],
+   "s": [
+    "Biceps"
+   ]
+  },
+  "chest-supported-row-lat-bias": {
+   "p": [
+    "Lats"
+   ],
+   "s": [
+    "Upper back",
+    "Biceps"
+   ]
+  },
+  "machine-row-for-rear-delts": {
+   "p": [
+    "Rear delts",
+    "Upper back"
+   ],
+   "s": [
+    "Biceps"
+   ]
+  },
+  "preacher-curl-machine": {
+   "p": [
+    "Biceps"
+   ],
+   "s": []
+  },
+  "leg-extension": {
+   "p": [
+    "Quads"
+   ],
+   "s": []
+  },
+  "calf-raise": {
+   "p": [
+    "Calves"
+   ],
+   "s": []
+  },
+  "leg-press": {
+   "p": [
+    "Quads"
+   ],
+   "s": [
+    "Glutes"
+   ]
+  },
+  "hamstring-curls": {
+   "p": [
+    "Hamstrings"
+   ],
+   "s": []
+  },
+  "romanian-deadlift-rdl": {
+   "p": [
+    "Hamstrings",
+    "Glutes"
+   ],
+   "s": []
+  },
+  "planks": {
+   "p": [
+    "Abs"
+   ],
+   "s": []
+  },
+  "sa-lateral-raise-cable-knee-height": {
+   "p": [
+    "Side delts"
+   ],
+   "s": []
+  },
+  "sa-triceps-ext-straight-from-shoulder": {
+   "p": [
+    "Triceps"
+   ],
+   "s": []
+  },
+  "lat-pulldown-neutral-grip": {
+   "p": [
+    "Lats"
+   ],
+   "s": [
+    "Biceps",
+    "Upper back"
+   ]
+  },
+  "seated-row-upper-back-bias": {
+   "p": [
+    "Upper back"
+   ],
+   "s": [
+    "Lats",
+    "Rear delts",
+    "Biceps"
+   ]
+  },
+  "rear-delt-cable-fly-bilateral": {
+   "p": [
+    "Rear delts"
+   ],
+   "s": []
+  },
+  "cable-rope-hammer-drag-curl": {
+   "p": [
+    "Biceps"
+   ],
+   "s": []
+  },
+  "bicep-curl-machine": {
+   "p": [
+    "Biceps"
+   ],
+   "s": []
   }
  }
 }
