@@ -144,7 +144,7 @@ function viewHome(params) {
   </div>
   <div class="bar"><i style="width:${(finishedCount / nDays()) * 100}%"></i></div>
   <div class="tiny muted" style="margin:6px 0 12px">${finishedCount} of ${nDays()} sessions done this week</div>
-  ${allWeekDone ? `<div class="card"><h3>Week ${w} complete</h3><p class="muted small" style="margin:4px 0 10px">${w < PLAN.weeks ? 'Nice work. Move on when you are ready.' : 'Block finished — export to Excel and plan the next one.'}</p>${w < PLAN.weeks ? `<button class="btn" data-act="week" data-dir="1">Start week ${w + 1}</button>` : ''}</div>` : ''}
+  ${allWeekDone ? `<div class="card"><h3>Week ${w} complete</h3><p class="muted small" style="margin:4px 0 10px">${w < PLAN.weeks ? 'Nice work. Move on when you are ready.' : 'Block finished — export to Excel and plan the next one.'}</p><a class="btn sec" href="#/ws/${w}" style="margin-bottom:10px">Week ${w} summary</a>${w < PLAN.weeks ? `<button class="btn" data-act="week" data-dir="1">Start week ${w + 1}</button>` : ''}</div>` : ''}
   <div class="pills" role="tablist">
     ${PLAN.days.map(d => { const ss = session(w, d.id); return `<a class="pill ${d.id === sel ? 'on' : ''} ${ss && ss.finished ? 'done' : ''}" href="#/?d=${d.id}">D${d.id} · ${esc(d.focus)}</a>`; }).join('')}
   </div>
@@ -167,7 +167,139 @@ function viewHome(params) {
   <details class="card"><summary style="font-weight:600">Warm-up first</summary>
     <ul class="clean small">${PLAN.warmup.map(x => { const id = 'warmup-' + x.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''); return `<li><a data-act="info" data-id="${id}" style="text-decoration:underline">${esc(x)}</a></li>`; }).join('')}</ul>
   </details>
-  <a class="btn" href="#/w/${w}/${sel}">${s && s.finished ? 'View / edit workout' : (s && Object.keys(s.sets).length ? 'Continue workout' : 'Start workout')}</a>`;
+  ${s && s.finished ? `<a class="btn" href="#/s/${w}/${sel}">Workout summary</a>` : ''}
+  <a class="btn${s && s.finished ? ' sec' : ''}" href="#/w/${w}/${sel}" ${s && s.finished ? 'style="margin-top:10px"' : ''}>${s && s.finished ? 'View / edit workout' : (s && Object.keys(s.sets).length ? 'Continue workout' : 'Start workout')}</a>`;
+}
+
+/* ---------- one-screen workout summary (made to be screenshotted) ---------- */
+function viewSummary(w, d) {
+  setTab('home');
+  const day = dayById(d), s = session(w, d);
+  if (!day || !s) return viewHome(new URLSearchParams());
+  const idx = sessIdx(w, d);
+  const start = s.date ? new Date(s.date) : null, end = s.end ? new Date(s.end) : null;
+  const mins = start && end ? Math.round((end - start) / 6e4) : null;
+  let setsDone = 0, setsPlan = 0, vol = 0, prs = 0;
+  const rows = day.exercises.map(ex => {
+    const ds = doneSets(s.sets[ex.id]); setsPlan += ex.sets; setsDone += ds.length;
+    ds.forEach(x => vol += (+x.kg || 0) * (+x.reps || 0));
+    const short = ex.name.replace(/\s*\(.*?\)/g, '');
+    if (!ds.length) return `<tr class="skip"><td>${esc(short)}</td><td colspan="3" class="muted">Skipped</td></tr>`;
+    const lp = lastWeekPerf(ex.id, w, d);
+    const byReps = ex.unit === 'sec' || ds.every(q => !(+q.kg > 0));
+    const score = a => byReps ? Math.max(...a.map(q => +q.reps || 0)) : Math.max(...a.map(q => e1rm(q.kg, q.reps)));
+    const best = Math.max(0, ...exposures(ex).filter(x => sessIdx(x.w, x.d) < idx).map(x => x.score));
+    const now = score(ds); const isPR = best > 0 && now > best + 1e-9; if (isPR) prs++;
+    let cmp = '<span class="muted">first</span>';
+    if (lp) {
+      const lTop = Math.max(...lp.sets.map(q => +q.kg || 0)), nTop = Math.max(...ds.map(q => +q.kg || 0));
+      const lReps = lp.sets.reduce((a, q) => a + (+q.reps || 0), 0), nReps = ds.reduce((a, q) => a + (+q.reps || 0), 0);
+      const dKg = nTop - lTop, dR = nReps - lReps, unit = ex.unit === 'sec' ? 's' : ' reps';
+      cmp = !byReps && Math.abs(dKg) > 0.01 ? `<span class="${dKg > 0 ? 'up' : 'down'}">${dKg > 0 ? '▲ +' : '▼ '}${fmt(dKg)} kg</span>`
+        : dR ? `<span class="${dR > 0 ? 'up' : 'down'}">${dR > 0 ? '▲ +' : '▼ '}${dR}${unit === ' reps' && Math.abs(dR) === 1 ? ' rep' : unit}</span>` : '<span class="muted">= same</span>';
+    }
+    const sets = ds.map(q => byReps && !(+q.kg > 0) ? `${fmt(q.reps)}${ex.unit === 'sec' ? 's' : ''}` : `${fmt(q.kg)}×${fmt(q.reps)}`).join('  ');
+    const rir = rirOf(s, ex.id);
+    return `<tr><td>${esc(short)}${isPR ? ' <span class="prb">PR</span>' : ''}${s.notes && s.notes[ex.id] ? `<div class="sn">${esc(s.notes[ex.id])}</div>` : ''}</td><td class="sets">${sets}</td><td class="c">${rir == null ? '–' : rir}</td><td class="r">${cmp}</td></tr>`;
+  }).join('');
+  const bw = (S.body || []).find(b => start && b.d === new Date(start.getTime() - start.getTimezoneOffset() * 6e4).toISOString().slice(0, 10));
+  const dateStr = start ? start.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' }) : 'From your sheet';
+  return `<div class="sum" id="summary">
+    <div class="sumhead">
+      <div><div class="eyebrow">${esc(PLAN.athlete)} · Week ${w} of ${PLAN.weeks}</div><div class="sumtitle">${esc(day.name)} · ${esc(day.focus)}</div><div class="small muted">${dateStr}${start && end ? ` · ${start.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}–${end.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}` : ''}</div></div>
+      <div class="sumlogo" aria-hidden="true">◉</div>
+    </div>
+    <div class="sumstats">
+      <div><b>${setsDone}<small>/${setsPlan}</small></b><span>Sets</span></div>
+      <div><b>${vol >= 1000 ? (Math.round(vol / 100) / 10) + 't' : Math.round(vol) + 'kg'}</b><span>Volume</span></div>
+      <div><b>${mins != null && mins >= 0 && mins < 300 ? mins + "'" : '–'}</b><span>Minutes</span></div>
+      <div><b>${prs}</b><span>PRs</span></div>
+      ${bw ? `<div><b>${fmt(bw.kg)}</b><span>Body kg</span></div>` : ''}
+    </div>
+    <table class="sumtable"><thead><tr><th>Exercise</th><th>Sets (kg×reps)</th><th class="c">RIR</th><th class="r">vs last</th></tr></thead><tbody>${rows}</tbody></table>
+    ${s.notes && s.notes._workout ? `<div class="sumnote"><b>Notes:</b> ${esc(s.notes._workout)}</div>` : ''}
+    <div class="sumfoot">RIR = reps left on last set · vs last = change since last time</div>
+  </div>
+  <div class="sumactions">
+    <p class="small muted" style="text-align:center;margin:10px 0">Take a screenshot (side + volume up) to send to your adviser.</p>
+    <a class="btn" href="#/">Done</a>
+    ${PLAN.days.every(x => (session(w, x.id) || {}).finished) ? `<a class="btn sec" href="#/ws/${w}" style="margin-top:10px">Week ${w} summary</a>` : ''}
+    <a class="btn sec" href="#/w/${w}/${d}" style="margin-top:10px">Edit workout</a>
+  </div>`;
+}
+
+/* ---------- one-screen weekly summary ---------- */
+function weekScoreBest(ex, w) {
+  const xs = exposures(ex).filter(x => x.w === w); return xs.length ? { score: Math.max(...xs.map(x => x.score)), byReps: xs[0].byReps } : null;
+}
+const half = v => (Math.round(v * 2) / 2) % 1 ? `${Math.floor(v)}½` : String(Math.round(v));
+function viewWeekSummary(w) {
+  setTab('progress');
+  w = Math.min(PLAN.weeks, Math.max(1, w));
+  let setsDone = 0, setsPlan = 0, vol = 0, prevVol = 0, prs = 0, mins = 0, minsN = 0;
+  const dates = [];
+  const dayRows = PLAN.days.map(d => {
+    const s = session(w, d.id); let sd = 0, sp = 0, v = 0, pr = 0;
+    d.exercises.forEach(ex => {
+      sp += ex.sets; const ds = s ? doneSets(s.sets[ex.id]) : []; sd += ds.length; ds.forEach(q => v += (+q.kg || 0) * (+q.reps || 0));
+      if (ds.length) { const idx = sessIdx(w, d.id); const before = exposures(ex).filter(x => sessIdx(x.w, x.d) < idx); const me = exposures(ex).find(x => x.w === w && x.d === d.id);
+        if (me && before.length && me.score > Math.max(...before.map(x => x.score)) + 1e-9) pr++; }
+    });
+    const ps = session(w - 1, d.id); if (ps) d.exercises.forEach(ex => doneSets(ps.sets[ex.id]).forEach(q => prevVol += (+q.kg || 0) * (+q.reps || 0)));
+    setsDone += sd; setsPlan += sp; vol += v; prs += pr;
+    const st = s && s.date ? new Date(s.date) : null, en = s && s.end ? new Date(s.end) : null; if (st) dates.push(st);
+    const m = st && en ? Math.round((en - st) / 6e4) : null; if (m != null && m > 0 && m < 300) { mins += m; minsN++; }
+    const done = s && s.finished;
+    return `<tr class="${done ? '' : 'skip'}"><td><b>D${d.id}</b> ${esc(d.focus)}</td><td>${st ? st.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric' }) : (done ? 'sheet' : '–')}</td><td class="c">${sd}/${sp}</td><td class="c">${v ? (Math.round(v / 100) / 10) + 't' : '–'}</td><td class="c">${m != null && m > 0 && m < 300 ? m + "'" : '–'}</td><td class="r">${done ? (pr ? `<span class="prb">${pr} PR</span>` : '✓') : '<span class="muted">not done</span>'}</td></tr>`;
+  }).join('');
+  const done = PLAN.days.filter(d => (session(w, d.id) || {}).finished).length;
+  // reps left
+  const rirs = []; PLAN.days.forEach(d => { const s = session(w, d.id); if (s) d.exercises.forEach(ex => { if (doneSets(s.sets[ex.id]).length) { const r = rirOf(s, ex.id); if (r != null) rirs.push(r); } }); });
+  const rirAvg = rirs.length ? (rirs.reduce((a, b) => a + b, 0) / rirs.length).toFixed(1) : '–';
+  // body weight: average over the 7 days from the week's first workout, vs the 7 days before
+  let bw = null;
+  if (dates.length && (S.body || []).length) {
+    const t0 = Math.min(...dates.map(x => x.getTime())), day = 864e5;
+    const inRange = (a, b) => S.body.filter(x => { const t = new Date(x.d + 'T12:00').getTime(); return t >= a && t < b; }).map(x => x.kg);
+    const cur = inRange(t0 - day / 2, t0 + 7 * day), prev = inRange(t0 - 7 * day, t0 - day / 2);
+    const avg = a => a.reduce((x, y) => x + y, 0) / a.length;
+    if (cur.length) bw = { avg: avg(cur), diff: prev.length ? avg(cur) - avg(prev) : null };
+  }
+  // exercise changes vs last week (best of the week)
+  const changes = allExercises().map(ex => { const a = weekScoreBest(ex, w), b = weekScoreBest(ex, w - 1); if (!a || !b || !b.score || a.byReps !== b.byReps) return null; return { ex, pct: (a.score / b.score - 1) * 100 }; }).filter(Boolean).sort((a, b) => b.pct - a.pct);
+  const ups = changes.filter(c => c.pct > 0.5).slice(0, 4), downs = changes.filter(c => c.pct < -0.5).sort((a, b) => a.pct - b.pct).slice(0, 3);
+  const flat = changes.filter(c => Math.abs(c.pct) <= 0.5).length;
+  const short = n => n.replace(/\s*\(.*?\)/g, '');
+  // muscles
+  const act = weekMuscleSets(w, false), pl = weekMuscleSets(w, true);
+  const mus = MUSCLES.filter(m => pl[m].sets > 0).map(m => { const a = act[m].sets; const ab = { 'Front delts': 'Front dl.', 'Side delts': 'Side dl.', 'Rear delts': 'Rear dl.', 'Upper back': 'U.back', 'Hamstrings': 'Hams' }; return `<div class="wm"><span title="${m}"><span class="lg">${m}</span><span class="sm">${ab[m] || m}</span></span><b class="${a === 0 ? '' : a < 10 ? 'lo' : a <= 20 ? 'ok' : 'hi'}">${half(a)}</b><i>/${half(pl[m].sets)}</i></div>`; }).join('');
+  const range = dates.length ? (() => { const a = new Date(Math.min(...dates)), b = new Date(Math.max(...dates)); const f = x => x.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }); return f(a) === f(b) ? f(a) : `${f(a)} – ${f(b)}`; })() : '';
+  const volChg = prevVol ? Math.round((vol / prevVol - 1) * 100) : null;
+  return `<div class="sum" id="summary">
+    <div class="sumhead">
+      <div><div class="eyebrow">${esc(PLAN.athlete)} · ${esc(PLAN.block)} block</div><div class="sumtitle">Week ${w} of ${PLAN.weeks} summary</div><div class="small muted">${range}</div></div>
+      <div class="sumlogo" aria-hidden="true">◉</div>
+    </div>
+    <div class="sumstats">
+      <div><b>${done}<small>/${nDays()}</small></b><span>Workouts</span></div>
+      <div><b>${setsDone}<small>/${setsPlan}</small></b><span>Sets</span></div>
+      <div><b>${Math.round(vol / 100) / 10}t</b><span>${volChg == null ? 'Volume' : `Vol <span class="${volChg >= 0 ? 'up' : 'down'}">${volChg >= 0 ? '+' : ''}${volChg}%</span>`}</span></div>
+      <div><b>${prs}</b><span>PRs</span></div>
+      <div><b>${rirAvg}</b><span>Avg RIR</span></div>
+    </div>
+    <table class="sumtable wk"><thead><tr><th>Day</th><th>Date</th><th class="c">Sets</th><th class="c">Vol</th><th class="c">Min</th><th class="r"></th></tr></thead><tbody>${dayRows}</tbody></table>
+    <div class="wgrid">
+      <div><div class="wh">Stronger vs last week</div>${ups.length ? ups.map(c => `<div class="wl"><span>${esc(short(c.ex.name))}</span><b class="up">+${Math.round(c.pct)}%</b></div>`).join('') : `<div class="wl muted">${w === 1 ? 'First week — baseline' : 'No gains logged'}</div>`}</div>
+      <div><div class="wh">Down</div>${downs.length ? downs.map(c => `<div class="wl"><span>${esc(short(c.ex.name))}</span><b class="down">${Math.round(c.pct)}%</b></div>`).join('') : '<div class="wl muted">None</div>'}${flat ? `<div class="wl muted">${flat} unchanged</div>` : ''}</div>
+    </div>
+    <div class="wh" style="margin-top:8px">Sets per muscle (done/plan)</div><div class="wms">${mus}</div>
+    ${bw ? `<div class="sumnote"><b>Body weight:</b> ${fmt(Math.round(bw.avg * 10) / 10)} kg avg${bw.diff != null ? ` · <span class="${bw.diff >= 0 ? 'up' : 'down'}">${bw.diff >= 0 ? '+' : ''}${fmt(Math.round(bw.diff * 100) / 100)} kg</span> vs week before` : ''}${minsN ? ` · ${Math.round(mins / minsN)}' avg session` : ''}</div>` : (minsN ? `<div class="sumnote">${Math.round(mins / minsN)}' average session</div>` : '')}
+    <div class="sumfoot">Changes use estimated 1RM (or reps for bodyweight) · RIR = reps left on last set</div>
+  </div>
+  <div class="sumactions">
+    <div class="weeknav" style="margin-top:12px"><a class="navbtn" href="#/ws/${Math.max(1, w - 1)}" aria-label="Previous week">‹</a><div class="grow small muted" style="text-align:center">Screenshot to share with your adviser</div><a class="navbtn" href="#/ws/${Math.min(PLAN.weeks, w + 1)}" aria-label="Next week">›</a></div>
+    <a class="btn" href="#/progress?w=${w}">Done</a>
+  </div>`;
 }
 
 function viewWorkout(w, d) {
@@ -366,6 +498,7 @@ function viewProgress(params) {
     <div class="grow" style="text-align:center;font-weight:700">Week ${W} of ${PLAN.weeks}${W === S.week ? ' <span class="tiny muted">· current</span>' : ''}</div>
     <a class="navbtn" href="${q({ w: Math.min(PLAN.weeks, W + 1) })}" aria-label="Next week">›</a>
   </div>
+  <a class="btn sec" href="#/ws/${W}" style="margin-bottom:10px">Week ${W} summary for your adviser</a>
   <div class="stats">
     <div class="stat"><div class="v">${doneW}/${nDays()}</div><div class="l">Workouts</div></div>
     <div class="stat"><div class="v">${hardSets}<span class="muted" style="font-size:13px">/${plannedSets}</span></div><div class="l">Working sets</div></div>
@@ -484,7 +617,7 @@ function viewSettings() {
   <div class="card"><button class="btn danger" data-act="reset">Erase all data</button></div>
   <p class="tiny muted" style="text-align:center;margin-top:16px">Train · ${esc(PLAN.athlete)} · ${esc(PLAN.block)} · v${APP_VERSION}</p>`;
 }
-const APP_VERSION = '1.6.0';
+const APP_VERSION = '1.8.0';
 
 /* ---------- exercise info sheet ---------- */
 function openInfo(id) {
@@ -683,7 +816,10 @@ function route() {
   const h = location.hash || '#/';
   const [path, q] = h.slice(1).split('?'); const params = new URLSearchParams(q || '');
   let html; let m;
+  document.body.classList.toggle('summary-mode', /^\/(s|ws)\//.test(path));
   if ((m = path.match(/^\/w\/(\d+)\/(\d+)/))) html = viewWorkout(m[1], m[2]);
+  else if ((m = path.match(/^\/ws\/(\d+)/))) html = viewWeekSummary(+m[1]);
+  else if ((m = path.match(/^\/s\/(\d+)\/(\d+)/))) html = viewSummary(+m[1], +m[2]);
   else if (path.startsWith('/progress')) html = viewProgress(params);
   else if (path.startsWith('/library')) html = viewLibrary();
   else if (path.startsWith('/settings')) html = viewSettings();
@@ -723,7 +859,7 @@ document.addEventListener('click', e => {
     inp.value = fmt(v); onSetInput(inp);
   }
   else if (a === 'addset') { const m = location.hash.match(/#\/w\/(\d+)\/(\d+)/); const s = session(+m[1], +m[2], true); (s.sets[t.dataset.ex] = s.sets[t.dataset.ex] || []); const ex = PLAN.days.flatMap(d => d.exercises).find(x => x.id === t.dataset.ex); while (s.sets[t.dataset.ex].length < ex.sets) s.sets[t.dataset.ex].push({ kg: '', reps: '', done: false }); s.sets[t.dataset.ex].push({ kg: '', reps: '', done: false }); save(); const y = window.scrollY; route(); window.scrollTo(0, y); }
-  else if (a === 'finish') { const s = session(+t.dataset.w, +t.dataset.d, true); const any = Object.values(s.sets).some(x => doneSets(x).length); if (!any && !confirm('No sets ticked. Mark this workout as done anyway?')) return; s.finished = true; s.date = s.date || new Date().toISOString(); save(); stopTimer(); toast('Workout saved'); location.hash = '#/'; }
+  else if (a === 'finish') { const s = session(+t.dataset.w, +t.dataset.d, true); const any = Object.values(s.sets).some(x => doneSets(x).length); if (!any && !confirm('No sets ticked. Mark this workout as done anyway?')) return; const first = !s.finished; s.finished = true; s.date = s.date || new Date().toISOString(); if (first || !s.end) s.end = new Date().toISOString(); save(); stopTimer(); location.hash = `#/s/${t.dataset.w}/${t.dataset.d}`; }
   else if (a === 'week') { const nw = Math.min(PLAN.weeks, Math.max(1, S.week + +t.dataset.dir)); if (nw !== S.week) { S.week = nw; save(); } location.hash = '#/'; route(); }
   else if (a === 't-minus') nudgeTimer(-15);
   else if (a === 't-plus') nudgeTimer(15);
