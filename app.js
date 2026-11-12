@@ -71,6 +71,13 @@ function lastNote(exId, beforeIdx) {
   for (const x of list) { const n = x.s.notes && x.s.notes[exId]; if (n && n.trim()) return { w: x.w, d: x.d, text: n }; }
   return null;
 }
+/** Weight logged per side (each dumbbell / each arm) vs total. Defaults set by Nasser (Nov 2026). */
+const PER_SIDE_DEFAULT = ['cable-cross-y-raise-lying-or-standing', 'incline-plate-loaded-press', 'flat-plate-loaded-press', 'reverse-pec-deck', 'chest-supported-row-lat-bias', 'machine-row-for-rear-delts', 'calf-raise', 'seated-row-upper-back-bias', 'rear-delt-cable-fly-bilateral', 'bicep-curl-machine'];
+function perSide(id) { const m = (S && S.settings && S.settings.perSide) || {}; return id in m ? !!m[id] : PER_SIDE_DEFAULT.includes(id); }
+function setPerSide(id, v) { S.settings.perSide = S.settings.perSide || {}; S.settings.perSide[id] = !!v; save(); }
+/** Volume counts both sides when weight is logged per side. */
+function setVol(id, q) { return (+q.kg || 0) * (+q.reps || 0) * (perSide(id) ? 2 : 1); }
+const sideTag = id => perSide(id) ? '/side' : '';
 const e1rm = (kg, reps) => (+kg > 0 && +reps > 0) ? +kg * (1 + Math.min(+reps, 15) / 30) : 0;
 
 /** Progression suggestion: double progression on the sheet's rep ranges. Advisory only. */
@@ -182,7 +189,7 @@ function viewSummary(w, d) {
   let setsDone = 0, setsPlan = 0, vol = 0, prs = 0;
   const rows = day.exercises.map(ex => {
     const ds = doneSets(s.sets[ex.id]); setsPlan += ex.sets; setsDone += ds.length;
-    ds.forEach(x => vol += (+x.kg || 0) * (+x.reps || 0));
+    ds.forEach(x => vol += setVol(ex.id, x));
     const short = ex.name.replace(/\s*\(.*?\)/g, '');
     if (!ds.length) return `<tr class="skip"><td>${esc(short)}</td><td colspan="3" class="muted">Skipped</td></tr>`;
     const lp = lastWeekPerf(ex.id, w, d);
@@ -198,7 +205,7 @@ function viewSummary(w, d) {
       cmp = !byReps && Math.abs(dKg) > 0.01 ? `<span class="${dKg > 0 ? 'up' : 'down'}">${dKg > 0 ? '▲ +' : '▼ '}${fmt(dKg)} kg</span>`
         : dR ? `<span class="${dR > 0 ? 'up' : 'down'}">${dR > 0 ? '▲ +' : '▼ '}${dR}${unit === ' reps' && Math.abs(dR) === 1 ? ' rep' : unit}</span>` : '<span class="muted">= same</span>';
     }
-    const sets = ds.map(q => byReps && !(+q.kg > 0) ? `${fmt(q.reps)}${ex.unit === 'sec' ? 's' : ''}` : `${fmt(q.kg)}×${fmt(q.reps)}`).join('  ');
+    const sets = ds.map(q => byReps && !(+q.kg > 0) ? `${fmt(q.reps)}${ex.unit === 'sec' ? 's' : ''}` : `${fmt(q.kg)}×${fmt(q.reps)}`).join('  ') + (perSide(ex.id) && !byReps ? ' <span class="side">/side</span>' : '');
     const rir = rirOf(s, ex.id);
     return `<tr><td>${esc(short)}${isPR ? ' <span class="prb">PR</span>' : ''}${s.notes && s.notes[ex.id] ? `<div class="sn">${esc(s.notes[ex.id])}</div>` : ''}</td><td class="sets">${sets}</td><td class="c">${rir == null ? '–' : rir}</td><td class="r">${cmp}</td></tr>`;
   }).join('');
@@ -241,11 +248,11 @@ function viewWeekSummary(w) {
   const dayRows = PLAN.days.map(d => {
     const s = session(w, d.id); let sd = 0, sp = 0, v = 0, pr = 0;
     d.exercises.forEach(ex => {
-      sp += ex.sets; const ds = s ? doneSets(s.sets[ex.id]) : []; sd += ds.length; ds.forEach(q => v += (+q.kg || 0) * (+q.reps || 0));
+      sp += ex.sets; const ds = s ? doneSets(s.sets[ex.id]) : []; sd += ds.length; ds.forEach(q => v += setVol(ex.id, q));
       if (ds.length) { const idx = sessIdx(w, d.id); const before = exposures(ex).filter(x => sessIdx(x.w, x.d) < idx); const me = exposures(ex).find(x => x.w === w && x.d === d.id);
         if (me && before.length && me.score > Math.max(...before.map(x => x.score)) + 1e-9) pr++; }
     });
-    const ps = session(w - 1, d.id); if (ps) d.exercises.forEach(ex => doneSets(ps.sets[ex.id]).forEach(q => prevVol += (+q.kg || 0) * (+q.reps || 0)));
+    const ps = session(w - 1, d.id); if (ps) d.exercises.forEach(ex => doneSets(ps.sets[ex.id]).forEach(q => prevVol += setVol(ex.id, q)));
     setsDone += sd; setsPlan += sp; vol += v; prs += pr;
     const st = s && s.date ? new Date(s.date) : null, en = s && s.end ? new Date(s.end) : null; if (st) dates.push(st);
     const m = st && en ? Math.round((en - st) / 6e4) : null; if (m != null && m > 0 && m < 300) { mins += m; minsN++; }
@@ -341,7 +348,7 @@ function exCard(ex, s, idx, w, d, i) {
       <div class="step"><button class="sb" data-act="step" data-f="kg" data-d="-1" aria-label="Less weight">−</button><input inputmode="decimal" enterkeyhint="next" aria-label="Set ${k + 1} kg" data-f="kg" value="${esc(vKg)}" placeholder="${esc(phKg)}"><button class="sb" data-act="step" data-f="kg" data-d="1" aria-label="More weight">+</button></div>
       <div class="step"><button class="sb" data-act="step" data-f="reps" data-d="-1" aria-label="Fewer ${isSec ? 'seconds' : 'reps'}">−</button><input inputmode="numeric" pattern="[0-9]*" enterkeyhint="done" aria-label="Set ${k + 1} ${isSec ? 'seconds' : 'reps'}" data-f="reps" value="${esc(vR)}" placeholder="${esc(phR)}"><button class="sb" data-act="step" data-f="reps" data-d="1" aria-label="More ${isSec ? 'seconds' : 'reps'}">+</button></div>
       <button class="ok" data-act="set" aria-label="Complete set ${k + 1}">✓</button>
-      ${prev ? `<span class="prevcap">Last: ${fmt(prev.kg)} kg × ${fmt(prev.reps)}${isSec ? ' s' : ''}</span>` : ''}
+      ${prev ? `<span class="prevcap">Last: ${fmt(prev.kg)} kg${perSide(ex.id) ? '/side' : ''} × ${fmt(prev.reps)}${isSec ? ' s' : ''}</span>` : ''}
     </div>`;
   }
   return `<section class="ex ${complete ? 'complete' : ''}" id="ex-${ex.id}">
@@ -353,7 +360,7 @@ function exCard(ex, s, idx, w, d, i) {
     ${sg ? `<div style="margin-top:8px"><span class="badge b-${sg.type}">${esc(sg.text)}</span></div>` : ''}
     ${note ? `<div class="tiny muted" style="margin-top:6px">Coach note available — tap ⓘ</div>` : ''}
     <div class="sets">
-      <div class="sethdr"><span style="text-align:center">Set</span><span style="text-align:center">kg</span><span style="text-align:center">${isSec ? 'Sec' : 'Reps'}</span><span></span></div>
+      <div class="sethdr"><span style="text-align:center">Set</span><button class="kgmode" data-act="side" data-ex="${ex.id}" aria-label="Switch between total weight and weight per side">${perSide(ex.id) ? 'kg per side' : 'kg total'} ⇄</button><span style="text-align:center">${isSec ? 'Sec' : 'Reps'}</span><span></span></div>
       ${rows}
       <button class="addset" data-act="addset" data-ex="${ex.id}">+ Add set</button>
     </div>
@@ -425,7 +432,7 @@ function viewProgress(params) {
   const id = params.get('ex') || (exs[0] && exs[0].id);
   const q = (o) => { const u = new URLSearchParams({ w: W, ...(id ? { ex: id } : {}), ...o }); return '#/progress?' + u.toString(); };
   const weeklyVol = Array.from({ length: PLAN.weeks }, (_, i) => {
-    let v = 0; PLAN.days.forEach(d => { const s = session(i + 1, d.id); if (s) Object.values(s.sets).forEach(a => doneSets(a).forEach(x => v += (+x.kg || 0) * (+x.reps || 0))); });
+    let v = 0; PLAN.days.forEach(d => { const s = session(i + 1, d.id); if (s) Object.entries(s.sets).forEach(([id, a]) => doneSets(a).forEach(x => v += setVol(id, x))); });
     return v;
   });
   const doneW = PLAN.days.filter(d => (session(W, d.id) || {}).finished).length;
@@ -617,7 +624,7 @@ function viewSettings() {
   <div class="card"><button class="btn danger" data-act="reset">Erase all data</button></div>
   <p class="tiny muted" style="text-align:center;margin-top:16px">Train · ${esc(PLAN.athlete)} · ${esc(PLAN.block)} · v${APP_VERSION}</p>`;
 }
-const APP_VERSION = '1.8.0';
+const APP_VERSION = '1.9.1';
 
 /* ---------- exercise info sheet ---------- */
 function openInfo(id) {
@@ -634,6 +641,8 @@ function openInfo(id) {
     </div>
     ${pics}
     <div class="chips">${(i.muscles || []).map(m => `<span class="chip">${esc(m)}</span>`).join('')}${i.equipment ? `<span class="chip">${esc(i.equipment)}</span>` : ''}${i.tempo ? `<span class="chip">Tempo ${esc(i.tempo)}</span>` : ''}${i.rest ? `<span class="chip">Rest ${restLabel(id)}</span>` : ''}</div>
+    ${findEx(id) && findEx(id).unit !== 'sec' ? `<div class="sidetoggle"><span class="small">Weight I log is</span><div class="seg"><button data-act="side" data-ex="${id}" data-v="0" class="${perSide(id) ? '' : 'on'}">Total</button><button data-act="side" data-ex="${id}" data-v="1" class="${perSide(id) ? 'on' : ''}">Per side</button></div></div>
+    <div class="tiny muted" style="margin:-4px 0 8px">Per side = one dumbbell or one arm. Volume then counts both sides.</div>` : ''}
     ${i.summary ? `<p class="small">${esc(i.summary)}</p>` : ''}
     ${note ? `<div class="note"><b>Your coach:</b> ${esc(note)}</div>` : ''}
     ${list('Setup', i.setup)}${list('Cues', i.cues)}${list('Common mistakes', i.mistakes)}
@@ -724,15 +733,16 @@ async function deliverFile(blob, name) {
   const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click();
   setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1500);
 }
-function summarize(sets) {
+function summarize(sets, id) {
+  const tag = id && perSide(id) ? '/side' : '';
   const ds = doneSets(sets); if (!ds.length) return '';
   const same = ds.every(s => s.kg === ds[0].kg && s.reps === ds[0].reps);
-  if (same) return `${ds.length} x ${fmt(ds[0].reps)} x ${fmt(ds[0].kg)}`;
+  if (same) return `${ds.length} x ${fmt(ds[0].reps)} x ${fmt(ds[0].kg)}${+ds[0].kg > 0 ? tag : ''}`;
   // Same "sets x reps x load" style as the coach's sheet, grouping consecutive identical sets.
   // e.g. "2 x 12/10 x 100" (same load) or "2 x 12/10 x 100/105" (load changed)
   const reps = ds.map(x => fmt(x.reps)), kgs = ds.map(x => fmt(x.kg));
   const one = a => a.every(v => v === a[0]) ? a[0] : a.join('/');
-  return `${ds.length} x ${one(reps)} x ${one(kgs)}`;
+  return `${ds.length} x ${one(reps)} x ${one(kgs)}${tag}`;
 }
 /** Fill the coach's original workbook (kept as a template) so the export looks exactly like it. */
 async function exportSheetFormat() {
@@ -772,7 +782,7 @@ async function exportSheetFormat() {
     }
     PLAN.days.forEach(d => d.exercises.forEach(e => {
       const row = X.rows[d.id] && X.rows[d.id][e.id]; if (!row) return;
-      X.weekCols.forEach((col, i) => { const s = session(i + 1, d.id); put(col + row, s ? summarize(s.sets[e.id]) : ''); });
+      X.weekCols.forEach((col, i) => { const s = session(i + 1, d.id); put(col + row, s ? summarize(s.sets[e.id], e.id) : ''); });
     }));
     zip.file(X.sheet, new XMLSerializer().serializeToString(doc));
     zip.remove('xl/calcChain.xml');
@@ -786,11 +796,11 @@ function exportExcel() {
   PLAN.days.forEach(d => {
     rows.push([null, `DAY ${d.id}`, d.focus.toUpperCase(), null, null, ...Array.from({ length: PLAN.weeks }, (_, i) => `Week ${i + 1}`)]);
     rows.push([null, null, 'Movement', 'Sets', 'Reps', ...Array(PLAN.weeks).fill('sets x reps x load')]);
-    d.exercises.forEach(e => rows.push([null, null, e.name, e.sets, e.reps, ...Array.from({ length: PLAN.weeks }, (_, i) => { const s = session(i + 1, d.id); return s ? summarize(s.sets[e.id]) || null : null; })]));
+    d.exercises.forEach(e => rows.push([null, null, e.name, e.sets, e.reps, ...Array.from({ length: PLAN.weeks }, (_, i) => { const s = session(i + 1, d.id); return s ? summarize(s.sets[e.id], e.id) || null : null; })]));
     rows.push([]);
   });
-  const log = [['Date', 'Week', 'Day', 'Focus', 'Exercise', 'Set', 'kg', 'Reps / sec', 'Est. 1RM', 'Reps left (last set)']];
-  sessionsOrdered().forEach(x => { const day = dayById(x.d); if (!day) return; day.exercises.forEach(e => doneSets(x.s.sets[e.id]).forEach((s, i) => log.push([x.s.date ? new Date(x.s.date).toLocaleDateString('en-GB') : (x.s.imported ? 'from sheet' : ''), x.w, x.d, day.focus, e.name, i + 1, +s.kg || 0, +s.reps, e.unit === 'sec' ? null : Math.round(e1rm(s.kg, s.reps) * 10) / 10, rirOf(x.s, e.id)]))); });
+  const log = [['Date', 'Week', 'Day', 'Focus', 'Exercise', 'Set', 'kg', 'kg is', 'Reps / sec', 'Est. 1RM', 'Reps left (last set)']];
+  sessionsOrdered().forEach(x => { const day = dayById(x.d); if (!day) return; day.exercises.forEach(e => doneSets(x.s.sets[e.id]).forEach((s, i) => log.push([x.s.date ? new Date(x.s.date).toLocaleDateString('en-GB') : (x.s.imported ? 'from sheet' : ''), x.w, x.d, day.focus, e.name, i + 1, +s.kg || 0, perSide(e.id) ? 'per side' : 'total', +s.reps, e.unit === 'sec' ? null : Math.round(e1rm(s.kg, s.reps) * 10) / 10, rirOf(x.s, e.id)]))); });
   const wb = XLSX.utils.book_new();
   const ws1 = XLSX.utils.aoa_to_sheet(rows); ws1['!cols'] = [{ wch: 3 }, { wch: 7 }, { wch: 40 }, { wch: 6 }, { wch: 9 }, ...Array(PLAN.weeks).fill({ wch: 18 })];
   const ws2 = XLSX.utils.aoa_to_sheet(log); ws2['!cols'] = [{ wch: 12 }, { wch: 6 }, { wch: 5 }, { wch: 7 }, { wch: 40 }, { wch: 5 }, { wch: 7 }, { wch: 10 }, { wch: 9 }];
@@ -835,6 +845,11 @@ document.addEventListener('click', e => {
   const a = t.dataset.act;
   if (a === 'info') { e.preventDefault(); openInfo(t.dataset.id); }
   else if (a === 'close') closeSheet();
+  else if (a === 'side') {
+    const id = t.dataset.ex; setPerSide(id, t.dataset.v != null ? t.dataset.v === '1' : !perSide(id));
+    toast(perSide(id) ? 'Weight is per side — volume counts both sides' : 'Weight is total');
+    const inSheet = !!t.closest('.sheet'); const y = window.scrollY; route(); window.scrollTo(0, y); if (inSheet) openInfo(id);
+  }
   else if (a === 'bigphoto') { const ph = t.closest('.ph'); const on = !ph.classList.contains('big'); document.querySelectorAll('.myphotos .ph.big').forEach(x => x.classList.remove('big')); ph.classList.toggle('big', on); }
   else if (a === 'delphoto') { const id = t.dataset.id; if (!confirm('Delete this photo?')) return; PHOTOS[id].splice(+t.dataset.i, 1); savePhotos(id).then(() => { openInfo(id); refreshThumbs(id); if (!/^#\/w\//.test(location.hash)) { const y = window.scrollY; route(); window.scrollTo(0, y); } }); }
   else if (a === 'set') toggleSet(t.closest('.set'));
